@@ -1,4 +1,4 @@
-const routes = require('express').Router();
+const router = require('express').Router();
 const routesUser = require('./userRoutes');
 const routesProjects = require('./routesProjects.js');
 
