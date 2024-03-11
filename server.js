@@ -2,7 +2,7 @@ const express = require('express');
 const sequelize = require('./config/connection');
 
 // Import model to sync table with database
-const Budget = require('./models/Book');
+const Budget = require('./models/Budget');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
