@@ -1,0 +1,16 @@
+  /* design */
+
+
+  /* responsive design */
+  @media screen and (min-width: 768px) {}
+
+  @media screen and (min-width: 768px) and (max-width: 1024px) {}
+
+  @media screen and (max-width: 767px) and (orientation: portrait) {}
+
+  @media screen and (max-width: 767px) {}
+
+  @media screen and (min-width: 1200px) {}
+
+  @media only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (min-resolution: 192dpi) {}
