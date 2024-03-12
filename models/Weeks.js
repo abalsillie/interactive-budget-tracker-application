@@ -1,10 +1,10 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-// Sequelize Module (ORM) for Budget 
-class Budget extends Model { }
+// Sequelize Module (ORM) for Categories 
+class Weeks extends Model { }
 
-Budget.init(
+Weeks.init(
   // Define fields/columns on model
   // model for budget table
   {
@@ -13,13 +13,12 @@ Budget.init(
       autoIncrement: true,
       primaryKey: true
     },
-    title: {
+    name: {
       type: DataTypes.STRING(30),
       allowNull: false
     },
-    amount: {
+    total: {
       type: DataTypes.DECIMAL(10, 2),
-      allowNull: false
     },
   },
   {
@@ -27,8 +26,11 @@ Budget.init(
     sequelize,
     timestamps: false,
     underscored: true,
-    modelName: 'budget'
+    modelName: 'weeks'
   }
 );
 
-module.exports = Budget;
+module.exports = Weeks;
+
+
+

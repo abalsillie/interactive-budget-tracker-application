@@ -1,10 +1,10 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-// Sequelize Module (ORM) for Budget 
-class Budget extends Model { }
+// Sequelize Module (ORM) for Categories 
+class Categories extends Model { }
 
-Budget.init(
+Categories.init(
   // Define fields/columns on model
   // model for budget table
   {
@@ -27,8 +27,9 @@ Budget.init(
     sequelize,
     timestamps: false,
     underscored: true,
-    modelName: 'budget'
+    modelName: 'categories'
   }
 );
 
-module.exports = Budget;
+module.exports = Categories;
+
