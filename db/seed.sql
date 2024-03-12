@@ -8,6 +8,3 @@ VALUES
 ('Personal spending'),
 ('Mortgage')
 
-INSERT INTO budget (title)
-VALUES
-
