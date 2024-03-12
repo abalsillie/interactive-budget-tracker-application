@@ -2,9 +2,9 @@ const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
 // Sequelize Module (ORM) for Budget 
-class Budget extends Model { }
+class Spends extends Model { }
 
-Budget.init(
+Spends.init(
   // Define fields/columns on model
   // model for budget table
   {
@@ -27,8 +27,15 @@ Budget.init(
     sequelize,
     timestamps: false,
     underscored: true,
-    modelName: 'budget'
+    modelName: 'spends'
   }
 );
 
-module.exports = Budget;
+module.exports = Spends;
+
+// goal has many spends
+// sequelize sum query for totals (controllers)
+// week has many spends
+//category has many spends
+//category has many goals
+// week has many goals
