@@ -8,3 +8,6 @@ VALUES
 ('Personal spending'),
 ('Mortgage')
 
+INSERT INTO weeks (name)
+VALUES
+

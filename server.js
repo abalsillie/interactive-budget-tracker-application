@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 3002;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Sync on refresh
-sequelize.sync({ force: true }).then(() => {
+//'alter' compares models to existing tables and updates accordingly on startup server
+sequelize.sync({ alter: true }).then(() => {
   app.listen(PORT, () => console.log('Now listening'));
 });

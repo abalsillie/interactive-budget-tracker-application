@@ -16,6 +16,7 @@ router.post('/', withAuths, async (req, res) => {
     }
 });
 
+
 router.delete('/:id', withAuths, async (req, res) => {
     try {
       const goalData = await Goals.destroy({
