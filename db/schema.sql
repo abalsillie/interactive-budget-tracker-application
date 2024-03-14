@@ -10,8 +10,12 @@ CREATE TABLE categories (
     amount DECIMAL(10, 2)
 );
 
--- Create the budget table referencing categories_id and weeks_id
-CREATE TABLE budget (
+
+
+-- Create the role table reference department id
+CREATE TABLE spends (
+
+
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(30) NOT NULL,
     amount DECIMAL(10, 2) NOT NULL,
