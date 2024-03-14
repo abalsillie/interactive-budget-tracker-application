@@ -12,7 +12,7 @@ CREATE TABLE categories (
 
 
 -- Create the role table reference department id
-CREATE TABLE budget (
+CREATE TABLE spends (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(30) NOT NULL,
     amount DECIMAL(10, 2) NOT NULL,

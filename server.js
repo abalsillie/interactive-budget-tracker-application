@@ -2,7 +2,7 @@ const express = require('express');
 const sequelize = require('./config/connection');
 
 // Import model to sync table with database
-const Budget = require('./models/Spends');
+const Spends = require('./models/Spends');
 const Categories = require('./models/Categories');
 const Goals = require('./models/Goals');
 const Weeks = require('./models/Weeks');

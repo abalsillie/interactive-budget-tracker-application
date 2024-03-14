@@ -33,9 +33,4 @@ Spends.init(
 
 module.exports = Spends;
 
-// goal has many spends
-// sequelize sum query for totals (controllers)
-// week has many spends
-//category has many spends
-//category has many goals
-// week has many goals
+
