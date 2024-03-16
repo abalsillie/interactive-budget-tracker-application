@@ -21,7 +21,22 @@ Weeks.init(
     total: {
       type: DataTypes.DECIMAL(10, 2),
     },
-    
+    start_date: {
+      type: DataTypes.DATEONLY, // Use DATEONLY for just the date without time
+      allowNull: false,
+    },
+    end_date: {
+      type: DataTypes.DATEONLY, // Use DATEONLY for just the date without time
+      allowNull: false,
+    },
+    //relationship link to user model
+    user_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'user', //name of table
+        key: 'id', //linked element
+      },
+    },
   },
   {
     // Connection Instance
