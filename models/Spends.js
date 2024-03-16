@@ -22,6 +22,22 @@ Spends.init(
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false
     },
+    //relationship link to categories model
+    categories_id: { 
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'categories', // name of the table
+        key: 'id', // key in the 'categories' table that 'categories_id' refers to.
+      },
+    },
+    //relationship link to weeks model
+    weeks_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'goals', //name of the table
+        key: 'id', //key in the weeks table that weeks_id refers to.
+      },
+    },
   },
   {
     // Connection Instance

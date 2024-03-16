@@ -22,6 +22,14 @@ Categories.init(
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false
     },
+    //relationship link to user who establishes their categories
+    user_id:{
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'user', //table name
+        key: 'id', //table key reference
+      },
+    }, 
   },
   {
     // Connection Instance

@@ -5,30 +5,34 @@ const Categories = require('./Categories');
 const Goals = require('./Goals');
 const Spends = require('./Spends');
 const Weeks = require('./Weeks');
+const User = require('./User');
 
-// Assuming Category, Spends, and Week models are imported
 
-Goals.hasMany(Spends, { foreignKey: 'spends_id' });
-Spends.belongsTo(Goals, { foreignKey: 'goals_id' });
+//added a categories_id column to the goals model for storage/link
+Categories.hasOne(Goals, { foreignKey: 'categories_id' }) //each category has one goal same each week
+Goals.belongsTo(Categories, { foreignKey: 'categories_id' });//goals has a categories_id
 
-Categories.hasMany(Spends, { foreignKey: 'spends_id' });
-Spends.belongsTo(Categories, { foreignKey: 'categories_id' });
+//added a categories_id column to the spends model for storage/link
+Categories.hasMany(Spends, { foreignKey: 'categories_id' }) //each category has many spends each week
+Spends.belongsTo(Categories, { foreignKey: 'categories_id' });//spends has a categories_id
 
-Categories.hasOne(Goals, { foreignKey: 'goals_id' });
-Goals.belongsTo(Categories, { foreignKey: 'categories_id' });
+//added a weeks_id column to the spends model for storage/link
+Weeks.hasMany(Spends, { foreignKey: 'weeks_id' }) //each week has many spends
+Spends.belongsTo(Weeks, { foreignKey: 'weeks_id' });//spends has a weeks_id
 
-Weeks.hasMany(Spends, { foreignKey: 'spends_id' });
-Spends.belongsTo(Weeks, { foreignKey: 'weeks_id' });
+//added a user_id column to the categories model for storage/link
+User.hasMany(Categories, { foreignKey: 'user_id' }) //each user has many categories
+Categories.belongsTo(User, { foreignKey: 'user_id' });//categories has a user_id
 
-Weeks.hasOne(Goals, { foreignKey: 'goals_id' });
-Goals.belongsTo(Weeks, { foreignKey: 'weeks_id' });
+
 
 module.exports = {
     Categories,
     Goals,
     Spends,
     Weeks,
-  }
+    User,
+}
 
 //option to remove relationships on weeks and rather sum categories using a sequelize query
 //group everything under goals etc and sum totals of categories connected to weeks etc 
