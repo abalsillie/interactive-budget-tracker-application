@@ -38,6 +38,14 @@ Spends.init(
         key: 'id', //key in the weeks table that weeks_id refers to.
       },
     },
+    //relationship link to user model
+    user_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'user', //name of user table
+        key: 'id', //relative key
+      },
+    },
   },
   {
     // Connection Instance
