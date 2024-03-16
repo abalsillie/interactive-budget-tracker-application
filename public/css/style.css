@@ -1,16 +1,154 @@
-  /* design */
+.register-btn, .login-btn {
+  background-color: #e236ba;
+  color: white;
+}
 
+.register-btn:hover, .login-btn:hover {
+  background-color: #e236ba;
+  color: #ee8fd8
+}
 
-  /* responsive design */
-  @media screen and (min-width: 768px) {}
+#update-modal-btn-event {
+  background-color:#5ed362;
+  color: #0d6710;
+  width: 150%;
+}
 
-  @media screen and (min-width: 768px) and (max-width: 1024px) {}
+#update-modal-btn-event:hover {
+  color: white;
+}
 
-  @media screen and (max-width: 767px) and (orientation: portrait) {}
+.modal-header {
+  background-color:#0d6710;
+}
 
-  @media screen and (max-width: 767px) {}
+.modal-title {
+  color: #5ed362;
+  text-align: center;
+}
 
-  @media screen and (min-width: 1200px) {}
+#sub-new-event, #editEvent {
+  background-color:#5ed362;
+  color: #0d6710;
+}
 
-  @media only screen and (-webkit-min-device-pixel-ratio: 2),
-  only screen and (min-resolution: 192dpi) {}
+#sub-new-event:hover, #editEvent:hover {
+  color: white;
+}
+
+#closeBtnFooter, #deleteEvent {
+  background-color: #45464a;
+  color: white;
+}
+
+#closeBtnFooter:hover, #deleteEvent:hover {
+  color: #b8bac0;
+}
+
+nav {
+  background-color: #45464a;
+}
+
+.header {
+  justify-content: left;
+  color: #e236ba;
+  background-color: #ee8fd8;
+  padding: 0.5rem 2rem;
+  border-radius: 30px;
+  margin-left: 10px;
+}
+
+#home, #expense-log, #login, #logout {
+  text-decoration: none;
+  color: white;
+}
+
+#home:hover, #expense-log:hover, #login:hover, #logout:hover {
+  color: #5ed362;
+  transition: all 0.5s ease-in-out;
+}
+
+body {
+  color: #0d6710;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: "apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", Helvetica, Arial, sans-serif,
+      "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1.75rem;
+  line-height: 1.5;
+}
+
+.about-header {
+  font-size: 50px;
+  border: 5px solid #0d6710;
+  border-radius: 8px;
+  background-color: #5ed362;
+  color: white;
+}
+
+img {
+  margin-bottom: 80px;
+  margin: auto;
+  max-width: 70%;
+  margin-bottom: 80px;
+}
+
+h2 {
+  font-size: 20px;
+}
+
+footer {
+  padding: 10px;
+  margin: 100px 20px;
+  font-size: 50px;
+  border: 5px solid #0d6710;
+  border-radius: 8px;
+  background-color: #5ed362;
+  color: white;
+}
+
+#about {
+  width: 70%;
+  padding: 2rem;
+  border: 5px solid #0d6710;
+  border-radius: 8px;
+  margin: 80px auto;
+  background-color: #d9e0d9;
+}
+
+#about:hover {
+  box-shadow: inset 0px 0px 15px #e236ba, 0 0 15px #e236ba;
+  transition: all 0.2s ease-in-out;
+}
+
+#sign-in {
+  font-size: 40px;
+  padding: 1rem 3rem;
+  border: 5px solid #d9e0d9;
+  border-radius: 30px;
+  background-color: #e236ba;
+  color: white;
+  text-decoration: none;
+}
+
+#sign-in:hover {
+  transition: all 0.2s ease-in-out;
+  box-shadow: inset 0px 0px 15px #e236ba, 0 0 15px #e236ba;
+  background-color: #ee8fd8;
+}
+
+/* mobile width settings */
+@media screen and (min-width: 768px) {
+  .card-column {
+      flex: 0 0 50%;
+  }
+}
+
+/* large screen settings */
+@media screen and (min-width: 992px) {
+  .card-column {
+      flex: 0 0 33%;
+  }
+}
