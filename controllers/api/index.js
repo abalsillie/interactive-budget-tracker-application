@@ -1,8 +1,19 @@
-const router = require('express').Router();
-const routesUser = require('./userroutes');
-const routesProjects = require('./routesProjects.js');
+//each model is represented with a route
 
-router.use('/users', routesUser);
-router.use('/projects', routesProjects);
+const router = require('express').Router();
+const routesUser = require('./routesUser');
+const routesCategories = require('./routesCategories');
+const routesSpends = require('./routesSpends');
+const routesWeeks = require('./routesWeeks');
+const routesGoals = require('./routesGoals');
+
+
+router.use('/user', routesUser);
+router.use('/categories', routesCategories);
+router.use('/spends', routesSpends);
+router.use('/weeks', routesWeeks);
+router.use('/goals', routesGoals);
 
 module.exports = router;
+
+
