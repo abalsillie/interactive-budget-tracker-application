@@ -1,5 +1,8 @@
+//route handles CRUD operations for Weeks
+
 const router = require('express').Router();
 const { Weeks } = require('../../models/Weeks');
+//withAuths is custom security authentication middleware enabled by the  express.js infrustructure
 const withAuths = require('../../utils/auth');
 
 router.post('/', withAuths, async (req, res) => {

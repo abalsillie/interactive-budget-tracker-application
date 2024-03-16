@@ -1,6 +1,9 @@
+//route handles CRUD operations for User
+
 const router = require('express').Router();
 const { User } = require('../../models');
 
+//create new user
 router.post('/', async (req, res) => {
     try {
         const usersData = await User.create(req.body);
@@ -39,7 +42,7 @@ router.post('/login', async (req, res) => {
             req.session.user_id = usersData.id;
             req.session.logged_in = true;
 
-            res.json({ user: usersData, message: 'LOGGING IN NOW!' });
+            res.json({ user: usersData, message: 'You are logged in!' });
         });
 
     } catch (err) {

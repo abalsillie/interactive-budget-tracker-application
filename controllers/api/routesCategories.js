@@ -1,6 +1,10 @@
+//route handles CRUD operations for Categories
+
 const router = require('express').Router();
 const { Categories } = require('../../models/Categories');
+//withAuths is custom security authentication middleware enabled by the  express.js infrustructure
 const withAuths = require('../../utils/auth');
+
 
 router.post('/', withAuths, async (req, res) => {
     try {

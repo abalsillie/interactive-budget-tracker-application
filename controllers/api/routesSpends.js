@@ -1,5 +1,8 @@
+//route handles CRUD operations for Spends
+
 const router = require('express').Router();
-const { Spends } = require('../../models/Spends');
+const { Spends } = require('../../models');
+//withAuths is custom security authentication middleware enabled by the  express.js infrustructure
 const withAuths = require('../../utils/auth');
 
 router.post('/', withAuths, async (req, res) => {

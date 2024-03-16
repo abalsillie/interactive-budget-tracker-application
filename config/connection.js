@@ -1,8 +1,15 @@
+//connection.js is our centralized instance of sequelize. 
+//all models etc will require sequelize via this connection.js config files 
+
 const Sequelize = require('sequelize');
 require('dotenv').config();
 
 let sequelize;
 
+//JAWSDB is a heroku add-on that allows us to take our db from our local environment
+//to the heroku  platform "Rather than going through the hassle of hosting, configuring, 
+//patching, and managing a database, JawsDB provides one-click delivery and management 
+//of a relational database in the cloud."
 if (process.env.JAWSDB_URL) {
   sequelize = new Sequelize(process.env.JAWSDB_URL);
 } else {

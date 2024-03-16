@@ -1,5 +1,8 @@
+//route handles CRUD operations for Goals
+
 const router = require('express').Router();
-const { Goals } = require('../../models/Goals');
+const { Goals } = require('../../models');
+//withAuths is custom security authentication middleware enabled by the  express.js infrustructure
 const withAuths = require('../../utils/auth');
 
 router.post('/', withAuths, async (req, res) => {
@@ -15,7 +18,6 @@ router.post('/', withAuths, async (req, res) => {
       res.status(404).json({ message: 'Error creating new goal!' });
     }
 });
-
 
 router.delete('/:id', withAuths, async (req, res) => {
     try {

@@ -1,3 +1,5 @@
+//each model is represented with a route
+
 const router = require('express').Router();
 const routesUser = require('./routesUser');
 const routesCategories = require('./routesCategories');
@@ -13,3 +15,5 @@ router.use('/weeks', routesWeeks);
 router.use('/goals', routesGoals);
 
 module.exports = router;
+
+
