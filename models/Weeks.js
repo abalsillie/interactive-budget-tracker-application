@@ -21,6 +21,7 @@ Weeks.init(
     total: {
       type: DataTypes.DECIMAL(10, 2),
     },
+    
   },
   {
     // Connection Instance
