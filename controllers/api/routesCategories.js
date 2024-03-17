@@ -28,11 +28,38 @@ router.get('/', withAuths, async (req, res) => {
       where: {
         user_id: req.session.user_id,
       },
+      include: [{
+        model: Goals,
+      }]
     });
     res.status(200).json(myCategories);
   }
   catch (err) {
     res.status(500).json({ message: 'Cannot retrieve all categories for user' })
+  }
+});
+
+// R- Read route for a single category with goal incl.
+router.get('/:id', withAuths, async (req, res) => {
+  try {
+    //findOne vs. findByPk = findOne can use where: filtering for user_id data
+    const oneCategory = await Categories.findOne({
+      where: {
+        id: req.params.id,
+        user_id: req.session.user_id,
+      },
+      include: [{
+        model: Goals,
+      }]
+    });
+    if (!oneCategory) {
+      res.status(404).json({ message: 'No category with this id found' });
+      return;
+    }
+    res.status(200).json(oneCategory);
+  }
+  catch (err) {
+    res.status(500).json({ message: 'Cannot retrieve that particular category' })
   }
 });
 
@@ -60,7 +87,7 @@ router.put('/:id', withAuths, async (req, res) => {
   }
 });
 
-// D- Delete route for single category
+// D- Delete route for single category w. goal included
 router.delete('/:id', withAuths, async (req, res) => {
   try {
     const categoryData = await Categories.destroy({
@@ -74,7 +101,6 @@ router.delete('/:id', withAuths, async (req, res) => {
       res.status(404).json({ message: 'No category with this id is found!' });
       return;
     }
-
     res.status(200).json(categoryData);
   } catch (err) {
     res.status(500).json(err);
@@ -86,7 +112,7 @@ router.delete('/', withAuths, async (req, res) => {
   try {
     const allCategoryData = await Categories.destroy({
       where: {
-        user_id: req.session.user_id,
+        user_id: req.session.user_id
       },
     });
 
