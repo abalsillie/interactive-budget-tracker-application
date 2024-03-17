@@ -1,13 +1,13 @@
 <div class="modal fade" id="entryModal" tabindex="-1" aria-labelledby="entryModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div id="newEventHeader" class="modal-header">
+      <div id="newExpenseHeader" class="modal-header">
         <h1 class="modal-title fs-5" id="entryModalLabel"></h1>
         <button id="closeBtnHeader" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
-          <form id="newEvent" class="form d-flex">
+          <form id="newExpense" class="form d-flex">
             <div class="col-12 flex">
               <input type="hidden" name="id" class="form-control">
               <div class=" mb-4 mx-2">
@@ -32,7 +32,7 @@
         <div id="catFormFields">
           {{> new-category}}
         </div>
-        <button id="sub-new-event" type="button" class="btn">Save</button>
+        <button id="sub-new-expense" type="button" class="btn">Save</button>
         <button id="closeBtnFooter" type="button" class="btn" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
