@@ -1,4 +1,4 @@
-//this is the entry oint for all route handling in theis application
+//this is the entry point for all route handling in theis application
 // ('/') directs to routesHome
 // ('/api') directs to all api folder files which begins with the index.js within that folder 
 

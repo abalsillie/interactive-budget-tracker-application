@@ -1,15 +1,16 @@
 //index.js manages the routing of all models for our api routes 
 //therefore we export each model here
 
+const User = require('./User');
 const Categories = require('./Categories');
 const Goals = require('./Goals');
 const Spends = require('./Spends');
 const Weeks = require('./Weeks');
-const User = require('./User');
+
 
 
 //added a categories_id column to the goals model for storage/link
-Categories.hasOne(Goals, { foreignKey: 'categories_id' }); //each category has one goal same each week
+Categories.hasOne(Goals, { foreignKey: 'categories_id' }); //each category has one goal which is the same each week
 Goals.belongsTo(Categories, { foreignKey: 'categories_id' });//goals has a categories_id
 
 //added a categories_id column to the spends model for storage/link
@@ -36,12 +37,12 @@ Weeks.belongsTo(User, {foreignKey: 'user_id'});//weeks has a user_id
 //categories are attached to the user and therefore goals will also be associated with the user via categories
 
 module.exports = {
+    User,
     Categories,
     Goals,
     Spends,
-    Weeks,
-    User,
-}
+    Weeks,   
+};
 
 //option to remove relationships on weeks and rather sum categories using a sequelize query
 //group everything under goals etc and sum totals of categories connected to weeks etc 
