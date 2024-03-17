@@ -18,10 +18,10 @@ Categories.hasMany(Spends, { foreignKey: 'categories_id' }); //each category has
 Spends.belongsTo(Categories, { foreignKey: 'categories_id' });//spends has a categories_id
 
 //added a weeks_id column to the categories model for storage/link
-Weeks.hasMany(Categories, { foreignKey: 'weeks_id' }); //each week has many categories
+Weeks.hasMany(Categories, { foreignKey: 'weeks_id'}); //each week has many categories
 Categories.belongsTo(Weeks, { foreignKey: 'weeks_id' });//categories has a weeks_id
 //added a weeks_id column to the spends model for storage/link
-Weeks.hasMany(Spends, { foreignKey: 'weeks_id' }); //each week has many spends
+Weeks.hasMany(Spends, { foreignKey: 'weeks_id', onDelete: 'CASCADE'   }); //each week has many spends
 Spends.belongsTo(Weeks, { foreignKey: 'weeks_id' });//spends has a weeks_id
 
 //added a user_id column to the categories model for storage/link

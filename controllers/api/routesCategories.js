@@ -77,7 +77,7 @@ router.put('/:id', withAuths, async (req, res) => {
     });
 
     if (categoryName[0] === 0) {
-      res.status(404).json({ message: 'This category was not found for this user!' });
+      res.status(404).json({ message: 'This category was not updated for this user!' });
       return;
     }
 
