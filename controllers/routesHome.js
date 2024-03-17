@@ -1,23 +1,23 @@
 const router = require('express').Router();
-const { Project, Users } = require('../models');
+const { Goals, Categories, Spends, User, Weeks } = require('../models');
 const withAuths = require('../utils/auth');
 
 router.get('/', async (req, res) => {
     try {
-        const projectsData = await Project.findAll({
-            include: [
-                {
-                    model: Users,
-                    attributes: ['name'],
-                },
-            ],
-        });
+        // const projectsData = await Project.findAll({
+        //     include: [
+        //         {
+        //             model: Users,
+        //             attributes: ['name'],
+        //         },
+        //     ],
+        // });
 
-        const projects = projectsData.map((project) => project.get({ plain: true }));
+        // const projects = projectsData.map((project) => project.get({ plain: true }));
 
         res.render('homepage', {
-            projects,
-            logged_in: req.session.logged_in
+            // projects,
+            loggedIn: req.session.logged_in
         });
     } catch (err) {
         res.status(500).json(err);
