@@ -1,25 +1,68 @@
-.register-btn, .login-btn {
+table {
+  border-collapse: collapse;
+  border: 2px solid rgb(140 140 140);
+  font-family: sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+
+caption {
+  caption-side: bottom;
+  padding: 10px;
+  font-weight: bold;
+}
+
+thead,
+tfoot {
+  background-color: rgb(228 240 245);
+}
+
+th,
+td {
+  border: 1px solid rgb(160 160 160);
+  padding: 8px 10px;
+}
+
+td:last-of-type {
+  text-align: center;
+}
+
+tbody>tr:nth-of-type(even) {
+  background-color: rgb(237 238 242);
+}
+
+tfoot th {
+  text-align: right;
+}
+
+tfoot td {
+  font-weight: bold;
+}
+
+.register-btn,
+.login-btn {
   background-color: #e236ba;
   color: white;
 }
 
-.register-btn:hover, .login-btn:hover {
+.register-btn:hover,
+.login-btn:hover {
   background-color: #e236ba;
   color: #ee8fd8
 }
 
-#update-modal-btn-event {
-  background-color:#5ed362;
+#update-modal-btn-expense {
+  background-color: #5ed362;
   color: #0d6710;
   width: 150%;
 }
 
-#update-modal-btn-event:hover {
+#update-modal-btn-expense:hover {
   color: white;
 }
 
 .modal-header {
-  background-color:#0d6710;
+  background-color: #0d6710;
 }
 
 .modal-title {
@@ -27,21 +70,25 @@
   text-align: center;
 }
 
-#sub-new-event, #editEvent {
-  background-color:#5ed362;
+#sub-new-expense,
+#editExpense {
+  background-color: #5ed362;
   color: #0d6710;
 }
 
-#sub-new-event:hover, #editEvent:hover {
+#sub-new-expense:hover,
+#editExpense:hover {
   color: white;
 }
 
-#closeBtnFooter, #deleteEvent {
+#closeBtnFooter,
+#deleteExpense {
   background-color: #45464a;
   color: white;
 }
 
-#closeBtnFooter:hover, #deleteEvent:hover {
+#closeBtnFooter:hover,
+#deleteExpense:hover {
   color: #b8bac0;
 }
 
@@ -58,12 +105,18 @@ nav {
   margin-left: 10px;
 }
 
-#home, #expense-log, #login, #logout {
+#home,
+#expense-log,
+#login,
+#logout {
   text-decoration: none;
   color: white;
 }
 
-#home:hover, #expense-log:hover, #login:hover, #logout:hover {
+#home:hover,
+#expense-log:hover,
+#login:hover,
+#logout:hover {
   color: #5ed362;
   transition: all 0.5s ease-in-out;
 }

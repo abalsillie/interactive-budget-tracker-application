@@ -1,26 +1,10 @@
-const subNewBtn = document.getElementById("sub-new-event");
-const subNewForm = document.getElementById("newEvent");
+const subNewBtn = document.getElementById("sub-new-expense");
+const subNewForm = document.getElementById("newExpense");
 const subCatForm = document.getElementById("sub-cat-form");
 const catListSel = document.getElementById("cat-select");
-const manageEvent = document.getElementById("buttons");
-// Arrays for cascading dropdown (didn't end up working in time)
+const manageExpense = document.getElementById("buttons");
 
-// var months = [];
-// var weeks = [];
-// var days = [];
-// for (let i = 1; i < 13; i++) {
-//   months.push(`<option value="${i}">${i}</option>`)
-// };
-// for (let i = 1; i < 53; i++) {
-//   weeks.push(`<option value="${i}">${i}</option>`)
-// };
-// for (let i = 1; i < 30; i++) {
-//   days.push(`<option value="${i}">${i}</option>`)
-
-// };
-
-$("#update-modal-btn-event").click(() => {  $('#entryModalLabel').html('New Event');});
-
+$("#update-modal-btn-expense").click(() => {  $('#entryModalLabel').html('New Expense');});
 async function catFetcher(catList) {
   const catFetch = await fetch('/category/', {
     method: "GET",
@@ -36,21 +20,16 @@ async function catFetcher(catList) {
   catListSel.value = "";
 };
 
-
-
-//event listener for modal
+//expense listener for modal
 subNewBtn.addEventListener('click', catFetcher());
-
-
-$("#deleteEvent").on('click', async (event) => {
-  const deletedEvent = await fetch(`/api/events/${event.target.dataset.id}`, {
+$("#deleteExpense").on('click', async (expense) => {
+  const deletedExpense = await fetch(`/api/expenses/${expense.target.dataset.id}`, {
     method: "DELETE",
     headers: { 'Content-Type': 'application/json' },
   });
   document.location.replace('/');
 }
 )
-
 
 $(document).ready(() => {
   $("#catFormFields").hide();
@@ -67,13 +46,6 @@ const toggleCategoryForm = () => {
 
 $("#cat-select").change(toggleCategoryForm);
 
-
-// $(addNewCat).on('click', (event) => {})
-
-// $(document.getElementById(t1-dur)).on('change', () => {
-
-// })
-
 async function catPost() {
   var catData = {};
   var catForm = new FormData(subCatForm);
@@ -83,9 +55,7 @@ async function catPost() {
   {
     "name": catData.catName,
     "type": catData.catType,
-    "t1": catData.t1int + " " + catData.t1dur,
-    "t2": catData.t2int + " " + catData.t2dur,
-    "t3": catData.t3int + " " + catData.t3dur
+    
   }
   catBody = JSON.stringify(catBody);
   const newCategory = await fetch('/api/categories', {
@@ -101,11 +71,11 @@ async function catPost() {
   return categoryData;
 }
 
-// event listener for new Event.
-subNewBtn.addEventListener("click", async (event) => {
+// event listener for new expense
+subNewBtn.addEventListener("click", async (expense) => {
 
   let newCategory = {};
-  event.preventDefault();
+  expense.preventDefault();
   if ($("#cat-select").val() === "0") {
     newCategory = await catPost();
 
@@ -123,7 +93,7 @@ subNewBtn.addEventListener("click", async (event) => {
     // "user_id": req.session.id
   }
   formBody = JSON.stringify(formBody);
-  let API = "/api/events/"
+  let API = "/api/expenses/"
   let METHOD = "POST"
   if ($('input[name="id"]').val().trim() !== "") {
     API += $('input[name="id"]').val().trim();
@@ -172,20 +142,19 @@ $("#closeBtnFooter").click(() => { resetFields() });
 $("#closeBtnHeader").click(() => { resetFields() });
 
 
-$("#editEvent").click(async (event) => {
-  event.preventDefault();
-  event.stopPropagation();
+$("#editExpense").click(async (expense) => {
+  expense.preventDefault();
+  expense.stopPropagation();
 
-  let eventData = await fetch(`/event/${event.target.dataset.id}`, {
+  let expenseData = await fetch(`/expense/${expense.target.dataset.id}`, {
     method: "GET",
     headers: { 'Content-Type': 'application/json' },
   });
-  eventData = await eventData.json();
-  $('#entryModalLabel').html('Edit Event');
-  $('input[name="id"]').val(eventData.id);
-  $('input[name="name"]').val(eventData.name);
-  $('input[name="description"]').val(eventData.description);
-  $('input[name="due_date"]').val(eventData.due_date);
-  $(`select[name="category"] option[value=${eventData.category.id}]`).attr('selected', 'selected');
-
+  expenseData = await expenseData.json();
+  $('#entryModalLabel').html('Edit Expense');
+  $('input[name="id"]').val(expenseData.id);
+  $('input[name="name"]').val(expenseData.name);
+  $('input[name="amount"]').val(expenseData.amount);
+  $(`select[name="category"] option[value=${expenseData.category.id}]`).attr('selected', 'selected');
+  $(`select[name="week_number"] option[value=${expenseData.week_number.id}]`).attr('selected', 'selected');
 });
