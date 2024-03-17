@@ -1,3 +1,5 @@
+//everything here responds to ('/')
+
 const router = require('express').Router();
 const { Goals, Categories, Spends, User, Weeks } = require('../models');
 const withAuths = require('../utils/auth');
@@ -24,7 +26,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/project/:id', async (req, res) => {
+router.get('/week/:id', async (req, res) => {
     try {
         const projectData = await Project.findByPk(req.params.id, {
             include: [

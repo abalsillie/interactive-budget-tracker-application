@@ -18,16 +18,25 @@ Categories.init(
       type: DataTypes.STRING(30),
       allowNull: false
     },
-    amount: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: false
-    },
+    //removed as redundant because goals is its own model
+    // amount: {
+    //   type: DataTypes.DECIMAL(10, 2),
+    //   allowNull: false
+    // },
     //relationship link to user who establishes their categories
     user_id:{
       type: DataTypes.INTEGER,
       references: {
         model: 'user', //table name
         key: 'id', //table key reference
+      },
+    },
+        //relationship link to weeks model
+    weeks_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'goals', //name of the table
+        key: 'id', //key in the weeks table that weeks_id refers to.
       },
     }, 
   },

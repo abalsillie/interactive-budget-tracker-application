@@ -14,12 +14,13 @@ Goals.init(
       autoIncrement: true,
       primaryKey: true
     },
-    weekly_total: {
+    amount: {
       type: DataTypes.DECIMAL(10, 2),
     },
-    category_amount: {
-      type: DataTypes.DECIMAL(10, 2),
-    },
+    //removed as extraneous for user- actual total will be dynamically calculated in route
+    // weekly_total: {
+    //   type: DataTypes.DECIMAL(10, 2),
+    // },
     //relationship link to categories model
     categories_id: {
       type: DataTypes.INTEGER,

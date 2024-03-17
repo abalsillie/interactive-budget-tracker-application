@@ -60,4 +60,32 @@ router.post('/logout', (req, res) => {
     }
 });
 
+router.delete('/:id', withAuths, async (req, res) => {
+    try {
+        // Check if the user deleting the account is the account owner
+        if (req.session.user_id !== parseInt(req.params.id)) { //take the route id and compare to the session id
+            res.status(403).json({ message: "Your user details do not match. Canot delete accounts" });
+            return;
+        }
+
+        const userData = await User.destroy({
+            where: {
+                id: req.params.id,
+            },
+        });
+
+        if (!userData) {
+            res.status(404).json({ message: 'No user found' });
+            return;
+        }
+
+        // Destroy the session after account deletion
+        req.session.destroy(() => {
+            res.status(200).json({ message: 'Account deleted.' });
+        });
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
 module.exports = router;
