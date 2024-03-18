@@ -11,7 +11,7 @@ const updateSpendFormHandler = async (event) => {
     const categories_id = document.querySelector("#title-update-spend") // value from updated categories_id input
     const weeks_id = document.querySelector("#title-update-spend") // value from updated weeks_id input
     if (title && amount && categories_id && weeks_id) {
-        const response = await fetch(`/api/routesSpends/${spends_id}`, {
+        const response = await fetch(`/api/spends/${spends_id}`, {
             method: "PUT", // PUT request
             body: JSON.stringify({ title, amount, categories_id, weeks_id }),
             headers: { "Content-Type": "application/json" },
@@ -27,7 +27,7 @@ const updateSpendFormHandler = async (event) => {
 // delete spend
 const deleteSpendFormHandler = async (event) => {
     event.preventDefault(); // prevent reload
-    const response = await fetch(`/api/routesSpends/${spends_id}`, {
+    const response = await fetch(`/api/spends/${spends_id}`, {
         method: "DELETE", // delete
     });
     if (response.ok) {

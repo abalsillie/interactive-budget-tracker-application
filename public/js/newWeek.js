@@ -3,7 +3,7 @@ const newWeekFormHandler = async (event) => { // new goal handler
     const id = document.querySelector('#id-new-week'); // id value
     const name = document.querySelector('#name-new-week'); // name value
        if (id && name) {
-      const response = await fetch('/api/routesWeeks', {
+      const response = await fetch('/api/weeks', {
         method: 'POST', // POST request
         body: JSON.stringify({ id, name }),
         headers: { 'Content-Type': 'application/json' },

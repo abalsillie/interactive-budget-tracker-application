@@ -8,7 +8,7 @@ const updateCategoryFormHandler = async (event) => {
     event.preventDefault(); // prevent reload
     const name = document.querySelector("#name-update-category").value.trim(); // value from updated name input
     if (name) {
-        const response = await fetch(`/api/routesCategories/${categories_id}`, {
+        const response = await fetch(`/api/categories/${categories_id}`, {
             method: "PUT", // PUT request
             body: JSON.stringify({ name }), // don't need to json stringify?
             headers: { "Content-Type": "application/json" },
@@ -24,7 +24,7 @@ const updateCategoryFormHandler = async (event) => {
 // delete category
 const deleteCategoryFormHandler = async (event) => {
     event.preventDefault(); // prevent reload
-    const response = await fetch(`/api/routesCategories/${categories_id}`, {
+    const response = await fetch(`/api/categories/${categories_id}`, {
         method: "DELETE", // delete
     });
     if (response.ok) {

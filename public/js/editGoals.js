@@ -9,7 +9,7 @@ const updateGoalFormHandler = async (event) => {
     const name = document.querySelector("#name-update-goal").value.trim(); // value from updated name input
     const category_id = document.querySelector("#spend-category"); // value from updated category_id input
     if (name && category_id) {
-        const response = await fetch(`/api/routesGoals/${goals_id}`, {
+        const response = await fetch(`/api/goals/${goals_id}`, {
             method: "PUT", // PUT request
             body: JSON.stringify({ name, category_id }),
             headers: { "Content-Type": "application/json" },
@@ -25,7 +25,7 @@ const updateGoalFormHandler = async (event) => {
 // delete goal
 const deleteGoalFormHandler = async (event) => {
     event.preventDefault(); // prevent reload
-    const response = await fetch(`/api/routesGoals/${goals_id}`, {
+    const response = await fetch(`/api/goals/${goals_id}`, {
         method: "DELETE", // delete
     });
     if (response.ok) {
