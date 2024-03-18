@@ -1,7 +1,7 @@
 //route handles CRUD operations for Categories
 
 const router = require('express').Router();
-const { Categories } = require('../../models/Categories');
+const { Categories } = require('../../models/');
 //withAuths is custom security authentication middleware enabled by the express.js infrustructure
 const withAuths = require('../../utils/auth');
 
@@ -67,9 +67,11 @@ router.get('/:id', withAuths, async (req, res) => {
 router.put('/:id', withAuths, async (req, res) => {
   try {
     //update method returns an array with number of affected rows
-    const categoryName = await Categories.update({
-      name: req.body.name, //field to update
-    }, {
+    const categoryName = await Categories.update(req.body
+      // {
+    //   name: req.body.name, //field to update
+    // }
+    , {
       where: {
         id: req.params.id, //correct category targeted
         user_id: req.session.user_id, //session id matches user
