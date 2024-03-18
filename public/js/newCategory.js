@@ -2,7 +2,7 @@ const newCategoryFormHandler = async (event) => { // new category handler
     event.preventDefault(); // prevent reload
     const name = document.querySelector('#name-new-category').value.trim(); // name value
     if (name) {
-      const response = await fetch('/api/routesCategories', {
+      const response = await fetch('/api/categories', {
         method: 'POST', // POST request
         body: JSON.stringify({ name }), // don't need to json stringify?
         headers: { 'Content-Type': 'application/json' },

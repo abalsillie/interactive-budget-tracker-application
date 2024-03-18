@@ -9,7 +9,7 @@ const updateWeekFormHandler = async (event) => {
     const id = document.querySelector("#id-update-week") // value from updated id input
     const name = document.querySelector("#name-update-week").value.trim(); // value from updated name input
     if (id && name) {
-        const response = await fetch(`/api/routesWeeks/${weeks_id}`, {
+        const response = await fetch(`/api/weeks/${weeks_id}`, {
             method: "PUT", // PUT request
             body: JSON.stringify({ id, name }),
             headers: { "Content-Type": "application/json" },
@@ -25,7 +25,7 @@ const updateWeekFormHandler = async (event) => {
 // delete week
 const deleteWeekFormHandler = async (event) => {
     event.preventDefault(); // prevent reload
-    const response = await fetch(`/api/routesWeeks/${weeks_id}`, {
+    const response = await fetch(`/api/weeks/${weeks_id}`, {
         method: "DELETE", // delete
     });
     if (response.ok) {

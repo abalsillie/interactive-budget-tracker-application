@@ -5,7 +5,7 @@ const newGoalFormHandler = async (event) => { // new goal handler
     const categories_id = document.querySelector('#category-id-new-spend'); // categories_id value
     const weeks_id = document.querySelector('#weeks-id-new-spend'); // weeks_id value
        if (title && amount && categories_id && weeks_id) {
-      const response = await fetch('/api/routesSpends', {
+      const response = await fetch('/api/spends', {
         method: 'POST', // POST request
         body: JSON.stringify({ title, amount, categories_id, weeks_id }),
         headers: { 'Content-Type': 'application/json' },
