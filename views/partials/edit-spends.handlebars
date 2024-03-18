@@ -1,0 +1,29 @@
+<!-- editSpends.js -->
+
+<main class="container mt-5">
+  <h1 class="mb-4">Edit</h1>
+  <form class="update-spend-form" class="mb-3">
+    <div class="mb-3">
+      <label for="title-update-spend" class="form-label">Title</label>
+      <input type="text" class="form-control" id="title-update-spend" placeholder="Enter spend title"
+        value="{{title}}" />
+    </div>
+    <div class="mb-3">
+      <label for="amount-update-spend" class="form-label">Amount</label>
+      <input type="text" class="form-control" id="amount-update-spend" placeholder="Enter spend amount"
+        value="{{amount}}" />
+    </div>
+    <div class="mb-3">
+      <input type="text" class="form-control" id="spend-category" value="{{categories_id}}" disabled>
+      <label for="spend-category" class="form-label">Category</label>
+    </div>
+    <div class="mb-3">
+      <input type="text" class="form-control" id="spend-week" value="{{weeks_id}}" disabled>
+      <label for="spend-week" class="form-label">Week</label>
+    </div>
+    <button type="submit" id="update-spend" class="btn btn-primary">Save</button>
+    <button type="button" id="delete-spend" class="btn btn-danger">Delete</button>
+  </form>
+</main>
+
+<!-- also handles deletion -->
