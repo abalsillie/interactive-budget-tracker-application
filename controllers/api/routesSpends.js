@@ -44,49 +44,24 @@ router.get('/:id', withAuths, async (req, res) => {
   }
 });
 
-// U- update route for single spend name
+// U- update route for spend
 router.put('/:id', withAuths, async (req, res) => {
   try {
     //update method returns an array with number of affected rows
-    const spendsName = await Spends.update({
-      name: req.body.name, //field to update
-    }, {
+    const spends = await Spends.update(req.body,
+      {
       where: {
         id: req.params.id, //correct category targeted
         user_id: req.session.user_id, //session id matches user
       },
     });
 
-    if (spendsName[0] === 0) {
+    if (spends[0] === 0) {
       res.status(404).json({ message: 'This spend expense name was not updated for this user!' });
       return;
     }
 
     res.status(200).json({ message: 'Spend name was updated!' });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-// U- update route for single spend amount
-router.put('/:id', withAuths, async (req, res) => {
-  try {
-    //update method returns an array with number of affected rows
-    const spendsAmount = await Spends.update({
-      amount: req.body.amount, //field to update
-    }, {
-      where: {
-        id: req.params.id, //correct category targeted
-        user_id: req.session.user_id, //session id matches user
-      },
-    });
-
-    if (spendsAmount[0] === 0) {
-      res.status(404).json({ message: 'This spend expense amount was not updated for this user!' });
-      return;
-    }
-
-    res.status(200).json({ message: 'Spend amount was updated!' });
   } catch (err) {
     res.status(500).json(err);
   }

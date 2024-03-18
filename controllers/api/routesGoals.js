@@ -41,13 +41,11 @@ router.get('/:id', withAuths, async (req, res) => {
   }
 });
 
-// U- update route for single goal amount
+// U- update route for goals
 router.put('/:id', withAuths, async (req, res) => {
   try {
     //update method returns an array with number of affected rows
-    const goalAmount = await Goals.update({
-      amount: req.body.amount, //field to update
-    }, {
+    const goalAmount = await Goals.update(req.body, {
       where: {
         id: req.params.id, //correct goal targeted
         user_id: req.session.user_id, //session id matches user

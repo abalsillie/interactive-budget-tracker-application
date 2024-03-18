@@ -45,13 +45,11 @@ router.get('/:id', withAuths, async (req, res) => {
   }
 });
 
-// U- update route for single week name
+// U- update route for single week name (all)
 router.put('/:id', withAuths, async (req, res) => {
   try {
     //update method returns an array with number of affected rows
-    const weekName = await Weeks.update({
-      name: req.body.name, //field to update
-    }, {
+    const weekName = await Weeks.update(req.body, {
       where: {
         id: req.params.id, //correct category targeted
         user_id: req.session.user_id, //session id matches user
@@ -67,6 +65,8 @@ router.put('/:id', withAuths, async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
+
+  
 });
 
 // U- update route for single week start date and autofill end date 7 days after
