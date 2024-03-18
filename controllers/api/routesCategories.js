@@ -20,25 +20,6 @@ router.post('/', withAuths, async (req, res) => {
   }
 });
 
-// R- Read route for all categories
-router.get('/', withAuths, async (req, res) => {
-  try {
-    const myCategories = await Categories.findAll({
-      //making sure the categories retrieved are from the user int his user session
-      where: {
-        user_id: req.session.user_id,
-      },
-      include: [{
-        model: Goals,
-      }]
-    });
-    res.status(200).json(myCategories);
-  }
-  catch (err) {
-    res.status(500).json({ message: 'Cannot retrieve all categories for user' })
-  }
-});
-
 // R- Read route for a single category with goal incl.
 router.get('/:id', withAuths, async (req, res) => {
   try {
