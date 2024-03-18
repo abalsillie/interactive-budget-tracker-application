@@ -14,15 +14,15 @@ router.get('/', async (req, res) => {
         res.status(500).json(err);
     }
 });
+
 router.get('/login', (req, res) => {
     if (req.session.logged_in) {
         res.redirect('/');
         return;
     }
-    res.render('login');
+    res.render('login-modal');
 });
 
-// R- Read route for all categories
 router.get('/categories', async (req, res) => {
     try {
       const myCategories = await Categories.findAll({
@@ -44,14 +44,40 @@ router.get('/categories', async (req, res) => {
 
   
     //restful api = post associated with changes
+
 router.post('/logout', (req, res) => {
     if (req.session.logged_in) {
-        req,session.destroy(() => {
-            res.redirect('/login');   
+        req, session.destroy(() => {
+            res.redirect('/login');
         });
-        
+
         return;
-    }});
+    }
+});
+
+//http:localhost:3002/category
+
+router.get('/category', async (req, res) => {
+    console.log("check herere");
+    try {
+        const myCategories = await Categories.findAll({
+            //making sure the categories retrieved are from the user int his user session
+            where: {
+                user_id: req.session.user_id,
+            },
+            include: [{
+                model: Goals,
+            }]
+        });
+        //res.status(200).json(myCategories);
+        res.render('categories', {
+            ...myCategories
+        });
+    }
+    catch (err) {
+        res.status(500).json({ message: 'Cannot retrieve all categories for user' })
+    }
+});
 
 module.exports = router;
 
