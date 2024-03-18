@@ -1,5 +1,24 @@
-{{#each categories}}
-<div>
-    <p>{{name}}</p>
-</div>
-{{/each}}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories</title>
+</head>
+<body>
+    <h1>Create Category</h1>
+    <form class="new-category-form">
+        <label for="name-new-category">Category Name:</label>
+        <input type="text" id="name-new-category" required>
+        <button type="submit">Save</button>
+    </form>
+
+    <h1>Categories</h1>
+    <div class="category-list">
+        <!-- Categories will be rendered here -->
+    </div>
+
+    <script src="categories.js"></script>
+</body>
+</html>
