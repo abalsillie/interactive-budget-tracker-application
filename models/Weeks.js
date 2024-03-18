@@ -18,9 +18,10 @@ Weeks.init(
       type: DataTypes.STRING(30),
       allowNull: false
     },
-    total: {
-      type: DataTypes.DECIMAL(10, 2),
-    },
+    // removed as handled by spends/goals
+    // total: {
+    //   type: DataTypes.DECIMAL(10, 2),
+    // },
     start_date: {
       type: DataTypes.DATEONLY, // Use DATEONLY for just the date without time
       allowNull: false,

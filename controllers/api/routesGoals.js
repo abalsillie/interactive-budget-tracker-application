@@ -73,16 +73,16 @@ router.put('/:id', withAuths, async (req, res) => {
   try {
     //update method returns an array with number of affected rows
     const goalAmount = await Goals.update({
-      name: req.body.amount, //field to update
+      amount: req.body.amount, //field to update
     }, {
       where: {
         id: req.params.id, //correct goal targeted
         user_id: req.session.user_id, //session id matches user
       },
     });
-
+//update returns an array. if there is nothing in our variable array then no changes were made
     if (goalAmount[0] === 0) {
-      res.status(404).json({ message: 'This goal was not found for this user!' });
+      res.status(404).json({ message: 'This goal was not updated for this user!' });
       return;
     }
 
