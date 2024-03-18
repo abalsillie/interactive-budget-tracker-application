@@ -22,8 +22,9 @@ router.post('/', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     try {
+        //finds user
         const usersData = await User.findOne({ where: { email: req.body.email } });
-
+//handles no user found
         if (!usersData) {
             res
                 .status(400)
@@ -31,18 +32,18 @@ router.post('/login', async (req, res) => {
             return;
         }
         const passwordVal = await usersData.checkPassword(req.body.password);
-
+//handles invalid password
         if (!passwordVal) {
             res
                 .status(400)
                 .json({ message: 'Try again please, Incorrect Email or Password' });
             return;
         }
-
+//saves session to create a new session for this user allowing them to maintain user state across app
         req.session.save(() => {
             req.session.user_id = usersData.id;
             req.session.logged_in = true;
-
+//success response
             res.json({ user: usersData, message: 'You are logged in!' });
         });
 

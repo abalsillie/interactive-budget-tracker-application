@@ -32,6 +32,7 @@ router.get('/', withAuths, async (req, res) => {
       ],
       raw: true, // This tells Sequelize to return plain results
     });
+    
     let weeklyTotal;
     if (myWeeklyGoals.length === 0) {
       weeklyTotal = 0;
