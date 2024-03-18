@@ -20,34 +20,6 @@ router.post('/', withAuths, async (req, res) => {
   }
 });
 
-// R- Read route for all goals added together = weekly goal total
-router.get('/', withAuths, async (req, res) => {
-  try {
-    const myWeeklyGoals = await Goals.findAll({
-      where: {
-        user_id: req.session.user_id,
-      },
-      attributes: [
-        [sequelize.fn('SUM', sequelize.col('amount')), 'weeklyTotal']
-      ],
-      raw: true, // This tells Sequelize to return plain results
-    });
-    
-    let weeklyTotal;
-    if (myWeeklyGoals.length === 0) {
-      weeklyTotal = 0;
-    } else {
-      weeklyTotal = myWeeklyGoals[0].weeklyTotal;
-    }
-
-    res.status(200).json(weeklyTotal);
-  }
-  catch (err) {
-    res.status(500).json({ message: 'Error fetching your goals!' });
-  }
-
-});
-
 // R- Read route for a single goal
 router.get('/:id', withAuths, async (req, res) => {
   try {
@@ -69,13 +41,11 @@ router.get('/:id', withAuths, async (req, res) => {
   }
 });
 
-// U- update route for single goal amount
+// U- update route for goals
 router.put('/:id', withAuths, async (req, res) => {
   try {
     //update method returns an array with number of affected rows
-    const goalAmount = await Goals.update({
-      amount: req.body.amount, //field to update
-    }, {
+    const goalAmount = await Goals.update(req.body, {
       where: {
         id: req.params.id, //correct goal targeted
         user_id: req.session.user_id, //session id matches user

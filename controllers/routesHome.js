@@ -20,10 +20,12 @@ router.get('/login', (req, res) => {
         res.redirect('/');
         return;
     }
-    res.render('login-modal');
+    res.render('login');
 });
 
-router.get('/categories', async (req, res) => {
+//categories also pulls in goals
+// R- Read route for all categories
+router.get('/categories', withAuths, async (req, res) => {
     try {
       const myCategories = await Categories.findAll({
         //making sure the categories retrieved are from the user int his user session
@@ -42,7 +44,52 @@ router.get('/categories', async (req, res) => {
     }
   });
 
-  
+  // R- Read route for all weeks w spends and categories/goals included
+  //weeks route also pulls in categories and goals
+router.get('/weeks', withAuths, async (req, res) => {
+    try {
+      const myWeeks = await Weeks.findAll({
+        //making sure the categories retrieved are from the user int his user session
+        where: {
+          user_id: req.session.user_id,
+        },
+        include: [
+          {
+            model: Categories,
+            include: [Goals]
+          },
+          { model: Spends },
+        ]
+      });
+      res.render('weeks', {...myWeeks});
+    }
+    catch (err) {
+      res.status(500).json({ message: 'Cannot retrieve all weeks for user' })
+    }
+  });
+
+  //spends also pulls in categories and weeks data
+  // R- Read route for a all spends brings in assigned categories and weeks also
+router.get('/spends', withAuths, async (req, res) => {
+  try {
+     const allSpends = await Spends.findOne({
+      where: {
+        id: req.params.id,
+        user_id: req.session.user_id,
+      },
+      include: 
+      [{ model: Categories,}]
+      [{ model: Weeks,}]
+    });
+    
+    res.render('spends', ...allSpends);
+  }
+  catch (err) {
+    res.status(500).json({ message: 'Cannot retrieve your spend expenses' })
+  }
+});
+
+   
     //restful api = post associated with changes
 
 router.post('/logout', (req, res) => {
