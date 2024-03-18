@@ -20,29 +20,6 @@ router.post('/', withAuths, async (req, res) => {
   }
 });
 
-// R- Read route for all weeks w spends and categories/goals included
-router.get('/', withAuths, async (req, res) => {
-  try {
-    const myWeeks = await Weeks.findAll({
-      //making sure the categories retrieved are from the user int his user session
-      where: {
-        user_id: req.session.user_id,
-      },
-      include: [
-        {
-          model: Categories,
-          include: [Goals]
-        },
-        { model: Spends },
-      ]
-    });
-    res.status(200).json(myWeeks);
-  }
-  catch (err) {
-    res.status(500).json({ message: 'Cannot retrieve all weeks for user' })
-  }
-});
-
 // R- Read route for a single week with w spends and categories/goals included
 router.get('/:id', withAuths, async (req, res) => {
   try {

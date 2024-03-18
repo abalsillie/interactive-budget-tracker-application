@@ -23,7 +23,7 @@ router.get('/login', (req, res) => {
 });
 
 // R- Read route for all categories
-router.get('/categories', async (req, res) => {
+router.get('/categories', withAuths, async (req, res) => {
     try {
       const myCategories = await Categories.findAll({
         //making sure the categories retrieved are from the user int his user session
@@ -42,7 +42,30 @@ router.get('/categories', async (req, res) => {
     }
   });
 
-  
+  // R- Read route for all weeks w spends and categories/goals included
+router.get('/', withAuths, async (req, res) => {
+    try {
+      const myWeeks = await Weeks.findAll({
+        //making sure the categories retrieved are from the user int his user session
+        where: {
+          user_id: req.session.user_id,
+        },
+        include: [
+          {
+            model: Categories,
+            include: [Goals]
+          },
+          { model: Spends },
+        ]
+      });
+      res.render(myWeeks);
+    }
+    catch (err) {
+      res.status(500).json({ message: 'Cannot retrieve all weeks for user' })
+    }
+  });
+
+   
     //restful api = post associated with changes
 router.post('/logout', (req, res) => {
     if (req.session.logged_in) {

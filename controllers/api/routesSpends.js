@@ -20,22 +20,6 @@ router.post('/', withAuths, async (req, res) => {
   }
 });
 
-// R- Read route for all spends
-router.get('/', withAuths, async (req, res) => {
-  try {
-    const mySpends = await Spends.findAll({
-      //making sure the spends retrieved are from the user in this user session
-      where: {
-        user_id: req.session.user_id,
-      },
-    });
-    res.status(200).json(mySpends);
-  }
-  catch (err) {
-    res.status(500).json({ message: 'Cannot retrieve all spends expenses for user' })
-  }
-});
-
 // R- Read route for a single spends with ist assigned category and assigned week
 router.get('/:id', withAuths, async (req, res) => {
   try {

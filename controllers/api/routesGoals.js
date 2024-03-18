@@ -20,34 +20,6 @@ router.post('/', withAuths, async (req, res) => {
   }
 });
 
-// R- Read route for all goals added together = weekly goal total
-router.get('/', withAuths, async (req, res) => {
-  try {
-    const myWeeklyGoals = await Goals.findAll({
-      where: {
-        user_id: req.session.user_id,
-      },
-      attributes: [
-        [sequelize.fn('SUM', sequelize.col('amount')), 'weeklyTotal']
-      ],
-      raw: true, // This tells Sequelize to return plain results
-    });
-    
-    let weeklyTotal;
-    if (myWeeklyGoals.length === 0) {
-      weeklyTotal = 0;
-    } else {
-      weeklyTotal = myWeeklyGoals[0].weeklyTotal;
-    }
-
-    res.status(200).json(weeklyTotal);
-  }
-  catch (err) {
-    res.status(500).json({ message: 'Error fetching your goals!' });
-  }
-
-});
-
 // R- Read route for a single goal
 router.get('/:id', withAuths, async (req, res) => {
   try {
