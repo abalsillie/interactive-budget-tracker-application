@@ -22,6 +22,19 @@ router.get('/login', (req, res) => {
     res.render('login-modal');
 });
 
+router.post('/login', async (req, res) => {
+    try {
+        // Your login logic goes here
+        // Assuming login is successful and req.session.logged_in is set to true
+        
+        // Redirect the user to the homepage_handlebar upon successful login
+        res.redirect('/homepage');
+    } catch (err) {
+        // Handle login errors
+        res.status(500).json({ message: 'Error occurred during login' });
+    }
+});
+
 router.get('/categories', async (req, res) => {
     try {
       const myCategories = await Categories.findAll({
