@@ -35,7 +35,7 @@ Categories.init(
     weeks_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'goals', //name of the table
+        model: 'weeks', //name of the table
         key: 'id', //key in the weeks table that weeks_id refers to.
       },
     }, 
