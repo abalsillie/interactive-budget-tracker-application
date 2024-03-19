@@ -7,7 +7,7 @@
     integrity="sha384-qN2+x3e7mJwmvoIBIz79iQWnxjx8DwwVRPITX7xT0NZ9Q4cTQqW09q4Sn57QrwzX"
     crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-  <link rel="stylesheet" href="../../public/css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 </header>
 
 <body>
@@ -33,28 +33,27 @@
 
   {{{ body }}}
   {{> login-modal}}
-
-  {{#if loggedIn}}
-  <script src="../../public/js/logout.js"></script>
-  {{else}}
-  <script src="../../js/login.js"></script>
-  {{/if}}
   <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.3.min.js"
-    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js" ></script>
+  {{#if loggedIn}}
+  <script src="/js/logout.js"></script>
+  {{else}}
+  <script src="/js/login.js"></script>
+  {{/if}}
 
-  <script src="../../public/js/editCategories.js"></script>
-  <script src="../../public/js/editGoals.js"></script>
-  <script src="../../public/js/editSpends.js"></script>
-  <script src="../../public/js/editWeeks.js"></script>
-  <script src="../../public/js/login.js"></script>
-  <script src="../../public/js/logout.js"></script>
-  <script src="../../public/js/newCategory.js"></script>
-  <script src="../../public/js/newGoals.js"></script>
-  <script src="../../public/js/newSpends.js"></script>
-  <script src="../../public/js/newWeeks.js"></script>
-  <script type="module" src="../../public/js/bargraph.js"></script>
-  <script type="module" src="../../public/js/updateScripts.js"></script>
+
+  <script src="/js/editCategories.js"></script>
+  <script src="/js/editGoals.js"></script>
+  <script src="/js/editSpends.js"></script>
+  <script src="/js/editWeeks.js"></script>
+  <script src="/js/login.js"></script>
+  <script src="/js/logout.js"></script>
+  <script src="/js/newCategory.js"></script>
+  {{!-- <script src="/js/newGoals.js"></script>
+  <script src="/js/newSpends.js"></script>
+  <script src="/js/newWeeks.js"></script> --}}
+  <script type="module" src="/js/bargraph.js"></script>
+  <script type="module" src="/js/updateScripts.js"></script>
 </body>
 
 </html>
