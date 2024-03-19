@@ -1,4 +1,3 @@
-// login handler
 const loginFormHandler = async (event) => {
   event.preventDefault();
   $('#loginMessage').remove();
@@ -37,20 +36,11 @@ const registerFormHandler = async (event) => {
   const password = $('#registerPassword').val().trim();
   const confirmPassword = $('#registerConfirmPassword').val().trim();
 
-  if (password !== confirmPassword) {
+  if (password !== confirmPassword || !/.{8,}/.test(password)) {
     $('#registerForm').prepend($('<div>', {
       class: "alert alert-danger",
       id: "registerMessage",
-      html: "<span>Error!</span>"
-    }));
-    return;
-  }
-
-  if (!/.{8,}/.test(password)) {
-    $('#registerForm').prepend($('<div>', {
-      class: "alert alert-danger",
-      id: "registerMessage",
-      html: "<span>Error!</span>"
+      html: "<span>Error: Passwords must match and be at least 8 characters long!</span>"
     }));
     return;
   }
@@ -58,7 +48,9 @@ const registerFormHandler = async (event) => {
   if (name && email && password) {
     const response = await fetch('/api/users/', {
       method: 'POST',
+
       body: JSON.stringify({ Name:name, email: email, password:password }),
+
       headers: { 'Content-Type': 'application/json' },
     });
 
@@ -70,10 +62,11 @@ const registerFormHandler = async (event) => {
       $('#registerForm').prepend($('<div>', {
         class: "alert alert-danger",
         id: "registerMessage",
-        html: "<span>Error!</span>"
+        html: `<span>Error: ${data.message}</span>`
       }));
     }
   }
 };
+
 $('#registerForm').on('submit', registerFormHandler);
 
