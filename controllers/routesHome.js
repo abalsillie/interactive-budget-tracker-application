@@ -28,7 +28,7 @@ router.post('/login', async (req, res) => {
         // Assuming login is successful and req.session.logged_in is set to true
         
         // Redirect the user to the homepage_handlebar upon successful login
-        res.redirect('/homepage');
+        res.redirect('/homepage:id');
     } catch (err) {
         // Handle login errors
         res.status(500).json({ message: 'Error occurred during login' });
