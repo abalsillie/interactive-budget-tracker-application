@@ -30,8 +30,7 @@ $('#loginForm').on('submit', loginFormHandler);
 const registerFormHandler = async (event) => {
   event.preventDefault();
   $('#registerMessage').remove();
-  const firstName = $('#registerFirstName').val().trim();
-  const lastName = $('#registerLastName').val().trim();
+  const name = $('#registerName').val().trim();
   const email = $('#registerEmail').val().trim();
   const password = $('#registerPassword').val().trim();
   const confirmPassword = $('#registerConfirmPassword').val().trim();
@@ -46,11 +45,9 @@ const registerFormHandler = async (event) => {
   }
 
   if (name && email && password) {
-    const response = await fetch('/api/users/', {
+    const response = await fetch('/api/user/', {
       method: 'POST',
-
-      body: JSON.stringify({ Name:name, email: email, password:password }),
-
+      body: JSON.stringify({ name: name, email: email, password:password }),
       headers: { 'Content-Type': 'application/json' },
     });
 
