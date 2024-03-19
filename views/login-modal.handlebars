@@ -7,6 +7,8 @@
         <h1 class="modal-title fs-5" id="loginModalLabel">Interactive Budget Tracker</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+
+      {{!-- //LOGIN FORM --}}
       <div class="modal-body">
         <div class="d-flex  justify-content-center">
           <div class="w-100 border rounded">
@@ -40,18 +42,16 @@
                   </div>
                 </form>
               </div>
+
+               {{!-- //REGISTER FORM --}}
               <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="pills-register-tab"
                 tabindex="0">
                 <form class="form" id="registerForm">
                   <!-- Name input -->
                   <div class=" mb-4 mx-2">
-                    <label class="form-label " for="registerFirstName">First Name:</label>
-                    <input type="input" id="registerFirstName" class="form-control" placeholder="Your first name" />
-                  </div>
-                  <div class=" mb-4 mx-2">
-                    <label class="form-label " for="registerLastName">Last Name:</label>
-                    <input type="input" id="registerLastName" class="form-control" placeholder="Your last name" />
-                  </div>
+                    <label class="form-label " for="registerName">Name:</label>
+                    <input type="input" id="registerName" class="form-control" placeholder="Your name" />
+                  </div>                
                   <!-- Email input -->
                   <div class=" mb-4 mx-2">
                     <label class="form-label " for="registerEmail">Email:</label>
