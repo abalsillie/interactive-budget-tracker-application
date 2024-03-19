@@ -14,7 +14,6 @@ router.get('/', async (req, res) => {
         res.status(500).json(err);
     }
 });
-
 router.get('/login', (req, res) => {
     if (req.session.logged_in) {
         res.redirect('/');
@@ -23,9 +22,25 @@ router.get('/login', (req, res) => {
     res.render('login');
 });
 
+
+router.post('/login', async (req, res) => {
+    try {
+        // Your login logic goes here
+        // Assuming login is successful and req.session.logged_in is set to true
+        
+        // Redirect the user to the homepage_handlebar upon successful login
+        res.redirect('/homepage');
+    } catch (err) {
+        // Handle login errors
+        res.status(500).json({ message: 'Error occurred during login' });
+    }
+});
+
+
 //categories also pulls in goals
 // R- Read route for all categories
 router.get('/categories', withAuths, async (req, res) => {
+
     try {
       const myCategories = await Categories.findAll({
         //making sure the categories retrieved are from the user int his user session
