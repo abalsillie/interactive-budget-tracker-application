@@ -45,10 +45,12 @@ const registerFormHandler = async (event) => {
     return;
   }
 
-  if (firstName && lastName && email && password) {
+  if (name && email && password) {
     const response = await fetch('/api/users/', {
       method: 'POST',
-      body: JSON.stringify({ firstName: firstName, lastName: lastName, email: email, password: password }),
+
+      body: JSON.stringify({ Name:name, email: email, password:password }),
+
       headers: { 'Content-Type': 'application/json' },
     });
 
@@ -65,4 +67,6 @@ const registerFormHandler = async (event) => {
     }
   }
 };
+
 $('#registerForm').on('submit', registerFormHandler);
+
