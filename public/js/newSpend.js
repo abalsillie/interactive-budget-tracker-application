@@ -1,22 +1,27 @@
-const newSpendFormHandler = async (event) => { // new goal handler
-  event.preventDefault(); // prevent reload
-  const name = document.querySelector('#name-new-spend'); // title value
-  const amount = document.querySelector('#amount-new-spend'); // amount value
-  const categories_id = document.querySelector('#category-id-new-spend'); // categories_id value
-  const weeks_id = document.querySelector('#weeks-id-new-spend'); // weeks_id value
-  
-  if (name && amount ) {
+const newSpendFormHandler = async (event) => {
+  event.preventDefault();
+  const nameInput = document.querySelector('#name-new-spend');
+  const name = nameInput.value.trim();
+  const amountInput = document.querySelector('#amount-new-spend');
+  const amount = amountInput.value.trim();
+  const categoriesInput = document.querySelector('#category-id-new-spend');
+  const categories_id = categoriesInput.value.trim();
+  const weeksInput = document.querySelector('#weeks-id-new-spend');
+  const weeks = weeksInput.value.trim();
+
+  if (name && amount) {
     try {
       const response = await fetch('/api/spends', {
-        method: 'POST', // POST request
-        body: JSON.stringify({ name, amount, categories_id, weeks_id }),
+        method: 'POST',
+        body: JSON.stringify({ name, amount, categories_id, weeks }),
         headers: { 'Content-Type': 'application/json' },
       });
       if (response.ok) {
-        const spendsData = await response.json();
-        renderNewspending(spendsData);
+        const spendData = await response.json();
+        renderNewSpending(spendData);
         nameInput.value = '';
         amountInput.value = '';
+        // Clear other input fields if needed
       } else {
         alert('Error creating spend!');
       }
@@ -25,19 +30,17 @@ const newSpendFormHandler = async (event) => { // new goal handler
       alert('An error occurred. Please try again.');
     }
   } else {
-    alert('Please enter a spend name.');
+    alert('Please enter a spend name and amount.');
   }
 };
 
-
-const renderNewspending = (spendsData) => {
+const renderNewSpending = (spendData) => {
   const spendList = document.querySelector('.spends-list');
   const spendElement = document.createElement('div');
-  spendElement.innerHTML = `<p>${spendsData.name}</p>`;
+  spendElement.innerHTML = `<p>${spendData.name}, Amount: ${spendData.amount}, Category: ${spendData.categories_id}, Week: ${spendData.weeks}</p>`;
   spendList.appendChild(spendElement);
 };
 
-// Function to render categories
 const renderSpends = async () => {
   try {
     const response = await fetch('/api/spends');
@@ -46,9 +49,9 @@ const renderSpends = async () => {
     }
     const spends = await response.json();
     const spendList = document.querySelector('.spends-list');
-    spendList.innerHTML = ''; // Clear existing list
+    spendList.innerHTML = '';
     spends.forEach(spend => {
-      renderNewspending(spend);
+      renderNewSpending(spend);
     });
   } catch (error) {
     console.error('Error:', error);
@@ -56,8 +59,11 @@ const renderSpends = async () => {
   }
 };
 
+document.addEventListener('DOMContentLoaded', () => {
+  renderSpends();
 
-const newSpendForm = document.querySelector('.new-spend-form');
-if (newSpendForm) {
-  newSpendForm.addEventListener('submit', newSpendFormHandler);
-}
+  const newSpendForm = document.querySelector('.new-spend-form');
+  if (newSpendForm) {
+    newSpendForm.addEventListener('submit', newSpendFormHandler);
+  }
+});

@@ -17,7 +17,7 @@ router.get('/login', (req, res) => {
         res.redirect('/');
         return;
     }
-    res.render('login');
+    res.render('login-modal');
 });
 router.post('/login', async (req, res) => {
     try {
@@ -48,6 +48,24 @@ router.get('/categories', async (req, res) => {
     }
     catch (err) {
         res.status(500).json({ message: 'Cannot retrieve all categories for user' })
+    }
+});
+
+router.get('/goals', async (req, res) => {
+    try {
+        const mygoals = await Goals.findAll({
+            where: {
+                user_id: req.session.user_id, // Assuming user ID is stored in session
+            },
+            include: [{
+                model: Goals,
+            }]
+        });
+        res.render('goals', { mygoals }); // Pass mygoals directly to the template
+    }
+    catch (err) {
+        console.error(err); // Log the error for debugging
+        res.status(500).json({ message: 'Cannot retrieve all goals for user' });
     }
 });
 // R- Read route for all weeks w spends and categories/goals included

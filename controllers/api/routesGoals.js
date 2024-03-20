@@ -2,7 +2,7 @@
 const router = require('express').Router();
 const { Goals } = require('../../models');
 //withAuths is custom security authentication middleware enabled by the  express.js infrustructure
-const withAuths = require('../../utils/auth');
+const withAuth = require('../../utils/auth');
 //C- Create route for a new goal
 router.post('/', async (req, res) => {
   try {

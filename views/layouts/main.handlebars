@@ -21,6 +21,11 @@
       <a id="goals" class="p-3" href="/goals">Goals</a>
       <a id="spends" class="p-3" href="/spends">Spends</a>
       <a id="weeks" class="p-3" href="/weeks">Weeks</a>
+      {{#if loggedIn}}
+      <a id="logout" class="p-3" href="/">Sign Out</a>
+      {{ else }}
+      <a href="/login" id="login" class="p-3" data-bs-toggle="modal" data-bs-target="#loginModal">Log In</a>
+      {{/if}}
     </div>
   </nav>
   {{{ body }}}

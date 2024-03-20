@@ -2,7 +2,7 @@
 const router = require('express').Router();
 const { Categories } = require('../../models/');
 //withAuths is custom security authentication middleware enabled by the express.js infrustructure
-const withAuths = require('../../utils/auth');
+const withAuth = require('../../utils/auth');
 // C- Create route for a new category
 router.post('/', async (req, res) => {
   try {
