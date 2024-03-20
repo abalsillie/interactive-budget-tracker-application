@@ -1,3 +1,15 @@
+{{!-- redirect if no data --}}
+
+{{#unless userSpends.length}}
+  {{> no-data }}
+{{/unless}}
+
+{{#each userSpends}}
+  <!-- Display spends data -->
+{{/each}}
+
+
+
 {{#each spends}}
 <div>
 <p>{{name}}</p>

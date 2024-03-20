@@ -52,14 +52,8 @@ router.get('/spends', async (req, res) => {
         });
         console.log('Spends fetched successfully:', allSpends);
 
-
-        if (allSpends.length === 0) {
-            console.log('No spends found, rendering no-data partial...');
-            // Render the no-spend-data partial if there are no spends
-            return res.render('partials/no-data', {});
-        }
-        console.log('Rendering spends partial...');
-        res.render('partials/spends', { ...allSpends });
+        const spends = allSpends.map(week => week.get({ plain: true }));
+        res.render('spends', { spends });
     }
     catch (err) {
         res.status(500).json({ message: 'Cannot retrieve your spend expenses' })
@@ -76,7 +70,8 @@ router.get('/categories', async (req, res) => {
             //  user_id: req.session.user_id,
             // },
         });
-        res.render('/partials/categories', { ...myCategories });
+        const categories = myCategories.map(week => week.get({ plain: true }));
+        res.render('categories', { categories });
     }
     catch (err) {
 
@@ -85,6 +80,7 @@ router.get('/categories', async (req, res) => {
     }
 });
 
+// GET WEEKS
 router.get('/weeks', async (req, res) => {
     try {
         const myWeeks = await Weeks.findAll({
@@ -97,7 +93,9 @@ router.get('/weeks', async (req, res) => {
                 { model: Spends },
             ]
         });
-        res.render('partials/weeks', { ...myWeeks });
+
+        const weeks = myWeeks.map(week => week.get({ plain: true }));
+        res.render('weeks', { weeks });
     }
     catch (err) {
         res.status(500).json({ message: 'Cannot retrieve all weeks for user' })
