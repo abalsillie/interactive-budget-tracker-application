@@ -2,6 +2,8 @@
 const router = require('express').Router();
 const { Goals, Categories, Spends, User, Weeks } = require('../models');
 const withAuths = require('../utils/auth');
+
+
 router.get('/', async (req, res) => {
     try {
         res.render('homepage', { //express looks for homepage within handlebars
