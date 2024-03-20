@@ -16,6 +16,7 @@ router.post('/', async (req, res) => {
     res.status(404).json({ message: 'Error creating new goal!' });
   }
 });
+
 // R- Read route for a single goal
 router.get('/:id', async (req, res) => {
   try {
@@ -36,8 +37,10 @@ router.get('/:id', async (req, res) => {
     res.status(500).json({ message: 'Cannot retrieve that particular goal' })
   }
 });
+
 // U- update route for goals
 router.put('/:id', async (req, res) => {
+
   try {
     //update method returns an array with number of affected rows
     const goalAmount = await Goals.update(req.body, {

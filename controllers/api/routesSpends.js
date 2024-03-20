@@ -16,6 +16,7 @@ router.post('/spends', async (req, res) => {
     res.status(404).json({ message: 'Error creating new spend expense object!' });
   }
 });
+
 // R- Read route for a single spends with ist assigned category and assigned week
 router.get('/:id', async (req, res) => {
   try {
@@ -39,17 +40,22 @@ router.get('/:id', async (req, res) => {
     res.status(500).json({ message: 'Cannot retrieve that particular spend expense' })
   }
 });
+
 // U- update route for spend
 router.put('/:id', async (req, res) => {
+
+
   try {
     //update method returns an array with number of affected rows
     const spends = await Spends.update(req.body,
       {
+
       // where: {
       //   id: req.params.id, //correct category targeted
       //   user_id: req.session.user_id, //session id matches user
       // },
     });
+
     if (spends[0] === 0) {
       res.status(404).json({ message: 'This spend expense name was not updated for this user!' });
       return;
@@ -59,6 +65,7 @@ router.put('/:id', async (req, res) => {
     res.status(500).json(err);
   }
 });
+
 // U- update route for spend's associated category NOTE we are taking info from user request at spendId and categoryId
 router.put('/:id', async (req, res) => {
   const {spendId, categoryId} = req.params;

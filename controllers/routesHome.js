@@ -17,8 +17,9 @@ router.get('/login', (req, res) => {
         res.redirect('/');
         return;
     }
-    res.render('login-modal');
+    res.render('login');
 });
+
 router.post('/login', async (req, res) => {
     try {
         // Your login logic goes here
@@ -30,9 +31,11 @@ router.post('/login', async (req, res) => {
         res.status(500).json({ message: 'Error occurred during login' });
     }
 });
+
 //categories also pulls in goals
 // R- Read route for all categories
 router.get('/categories', async (req, res) => {
+
     try {
         const myCategories = await Categories.findAll({
             //making sure the categories retrieved are from the user int his user session
@@ -47,7 +50,9 @@ router.get('/categories', async (req, res) => {
         res.render('categories', { ...myCategories });
     }
     catch (err) {
+
         res.status(500).json({ message: 'Cannot retrieve all categories for user' })
+
     }
 });
 

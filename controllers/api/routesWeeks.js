@@ -17,6 +17,7 @@ router.post('/', async (req, res) => {
     res.status(404).json({ message: 'Error creating a new week!' });
   }
 });
+
 // R- Read route for a single week with w spends and categories/goals included
 router.get('/:id', async (req, res) => {
   try {
@@ -41,8 +42,10 @@ router.get('/:id', async (req, res) => {
     res.status(500).json({ message: 'Cannot retrieve that particular week' })
   }
 });
+
 // U- update route for single week name (all)
 router.put('/:id', async (req, res) => {
+
   try {
     //update method returns an array with number of affected rows
     const weekName = await Weeks.update(req.body, {
@@ -59,6 +62,8 @@ router.put('/:id', async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
+
+  
 });
 // U- update route for single week start date and autofill end date 7 days after
 router.put('/:id', async (req, res) => {

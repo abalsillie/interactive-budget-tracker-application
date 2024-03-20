@@ -30,9 +30,11 @@ const registerFormHandler = async (event) => {
   const password = $('#password-signup').val().trim();
 
   if (name && email && password) {
+
     const response = await fetch('/api/users/', {
       method: 'POST',
       body: JSON.stringify({ username: name, email: email, password: password }),
+
       headers: { 'Content-Type': 'application/json' },
     });
 
@@ -51,4 +53,4 @@ const registerFormHandler = async (event) => {
 
 $('.signup-form').on('submit', registerFormHandler);
 
-$('.signup-form').on('submit', registerFormHandler);
+
