@@ -18,13 +18,13 @@ const categoriesData = [
     { name: 'Transport', user_id: 1, weeks_id: 1 },
 
 ];
-const goalsData = [
-    { amount: 300, categories_id: 1 },
-    { amount: 225, categories_id: 2 },
-    { amount: 50, categories_id: 3 },
-    { amount: 100, categories_id: 4 },
-    { amount: 140, categories_id: 5 },
-];
+// const goalsData = [
+//     { amount: 300, categories_id: 1 },
+//     { amount: 225, categories_id: 2 },
+//     { amount: 50, categories_id: 3 },
+//     { amount: 100, categories_id: 4 },
+//     { amount: 140, categories_id: 5 },
+// ];
 
 const spendsData = [
     { name: 'Uber Eats', amount: 35, categories_id: 2, weeks_id: 1 },
@@ -41,21 +41,20 @@ const spendsData = [
 ];
 
 const weeksData = [
-    {name: 'My first week', start_date: '2024-03-18', user_id: 1 },
-    {name: 'My second week', start_date: '2024-03-25', user_id: 1 },
+    { name: 'My first week', start_date: '2024-03-18', user_id: 1 },
+    { name: 'My second week', start_date: '2024-03-25', user_id: 1 },
 ];
-
 
 //append the dummy data to relevant models
 const seedDatabase = async () => {
     try {
         await sequelize.sync({ force: true }); // Sync models with the database
 
-        await User.bulkCreate(userData); 
-        await Categories.bulkCreate(categoriesData); 
-        await Goals.bulkCreate(goalsData); 
-        await Spends.bulkCreate(spendsData); 
-        await Weeks.bulkCreate(weeksData); 
+        await User.bulkCreate(userData);
+        await Categories.bulkCreate(categoriesData);
+        //await Goals.bulkCreate(goalsData);
+        await Weeks.bulkCreate(weeksData);
+        await Spends.bulkCreate(spendsData);
 
         console.log('Seed data inserted successfully');
     } catch (error) {

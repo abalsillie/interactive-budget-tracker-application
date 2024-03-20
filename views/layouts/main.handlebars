@@ -12,16 +12,15 @@
 
 <body>
   <nav class="navbar justified">
-
     <h1 class="header" href="/">Interactive Budget Tracker</h1>
     <div>
-      {{#if firstName}}
-      <h2 class="text-light fst-italic text-center">Welcome {{firstName}}</h2>
+      {{#if name}}
+      <h2 class="text-light fst-italic text-center">Welcome</h2>
       {{/if}}
       <a id="home" class="p-3" href="/">Home</a>
       <a id="categories" class="p-3" href="/categories">Categories</a>
       <a id="goals" class="p-3" href="/goals">Goals</a>
-      <a id="spends" class="p-3" href="/homepage-dashboard">Spends</a>
+      <a id="spends" class="p-3" href="/spends">Spends</a>
       <a id="weeks" class="p-3" href="/weeks">Weeks</a>
       {{#if loggedIn}}
       <a id="logout" class="p-3" href="/">Sign Out</a>
@@ -30,31 +29,24 @@
       {{/if}}
     </div>
   </nav>
-
   {{{ body }}}
-  {{> login-modal}}
 
-  {{#if loggedIn}}
-  <script src="../../public/js/logout.js"></script>
-  {{else}}
-  <script src="../../js/login.js"></script>
-  {{/if}}
   <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.3.min.js"
-    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+  
+  {{!-- <script src="/js/editCategories.js"></script> --}}
+  <script src="/js/editGoals.js"></script>
+  <script src="/js/editSpends.js"></script>
+  <script src="/js/editWeeks.js"></script>
+  <script src="/js/login.js"></script>
+  <script src="/js/logout.js"></script>
+  <script src="/js/newCategory.js"></script>
+  <script src="/js/newGoals.js"></script>
+  {{!-- <script src="/js/newSpends.js"></script> --}}
+  <script src="/js/newWeeks.js"></script> 
+  <script type="module" src="/js/bargraph.js"></script>
+  {{!-- <script type="module" src="/js/updateScripts.js"></script> --}}
 
-  <script src="../../public/js/editCategories.js"></script>
-  <script src="../../public/js/editGoals.js"></script>
-  <script src="../../public/js/editSpends.js"></script>
-  <script src="../../public/js/editWeeks.js"></script>
-  <script src="../../public/js/login.js"></script>
-  <script src="../../public/js/logout.js"></script>
-  <script src="../../public/js/newCategory.js"></script>
-  <script src="../../public/js/newGoals.js"></script>
-  <script src="../../public/js/newSpends.js"></script>
-  <script src="../../public/js/newWeeks.js"></script>
-  <script type="module" src="../../public/js/bargraph.js"></script>
-  <script type="module" src="../../public/js/updateScripts.js"></script>
 </body>
 
 </html>

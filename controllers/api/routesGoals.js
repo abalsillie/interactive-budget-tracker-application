@@ -1,18 +1,15 @@
 //route handles CRUD operations for Goals
-
 const router = require('express').Router();
 const { Goals } = require('../../models');
 //withAuths is custom security authentication middleware enabled by the  express.js infrustructure
-const withAuths = require('../../utils/auth');
-
+const withAuth = require('../../utils/auth');
 //C- Create route for a new goal
-router.post('/', withAuths, async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const newGoal = await Goals.create({
       ...req.body,
       user_id: req.session.user_id,
     });
-
     res.status(200).json(newGoal);
   }
   catch (err) {
@@ -21,7 +18,7 @@ router.post('/', withAuths, async (req, res) => {
 });
 
 // R- Read route for a single goal
-router.get('/:id', withAuths, async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     //findOne vs. findByPk = findOne can use where: filtering for user_id data
     const oneGoal = await Goals.findOne({
@@ -42,7 +39,8 @@ router.get('/:id', withAuths, async (req, res) => {
 });
 
 // U- update route for goals
-router.put('/:id', withAuths, async (req, res) => {
+router.put('/:id', async (req, res) => {
+
   try {
     //update method returns an array with number of affected rows
     const goalAmount = await Goals.update(req.body, {
@@ -56,15 +54,13 @@ router.put('/:id', withAuths, async (req, res) => {
       res.status(404).json({ message: 'This goal was not updated for this user!' });
       return;
     }
-
     res.status(200).json({ message: 'Goal amount was updated!' });
   } catch (err) {
     res.status(500).json(err);
   }
 });
-
 //D- delete goal
-router.delete('/:id', withAuths, async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const goalData = await Goals.destroy({
       where: {
@@ -72,37 +68,30 @@ router.delete('/:id', withAuths, async (req, res) => {
         user_id: req.session.user_id,
       },
     });
-
     if (!goalData) {
       res.status(404).json({ message: 'No goal with this id is found!' });
       return;
     }
-
     res.status(200).json(goalData);
   } catch (err) {
     res.status(500).json(err);
   }
 });
-
 //D- delete all goal
-router.delete('/', withAuths, async (req, res) => {
+router.delete('/', async (req, res) => {
   try {
     const allGoalData = await Goals.destroy({
       where: {
         user_id: req.session.user_id,
       },
     });
-
     if (allGoalData === 0) {
       res.status(404).json({ message: 'No goals were found to delete!' });
       return;
     }
-
     res.status(200).json({ message: `${allGoalData} goals have been deleted.` });
   } catch (err) {
     res.status(500).json(err);
   }
 });
-
 module.exports = router;
-

@@ -1,8 +1,8 @@
 const loginFormHandler = async (event) => {
   event.preventDefault();
-  $('#loginMessage').remove();
-  const email = $('#loginEmail').val().trim();
-  const password = $('#loginPassword').val().trim();
+
+  const email = $('#email-login').val().trim();
+  const password = $('#password-login').val().trim();
 
   if (email && password) {
     const response = await fetch('/api/users/login', {
@@ -15,55 +15,42 @@ const loginFormHandler = async (event) => {
       document.location.replace('/');
     } else {
       const data = await response.json();
-
-      $('#loginForm').prepend($('<div>', {
-        class: "alert alert-danger",
-        id: "loginMessage",
-        html: `<span>${data.message}</span>`
-      }));
+      alert(data.message); // Show error message
     }
   }
 };
-$('#loginForm').on('submit', loginFormHandler);
 
-// registration handler
+$('.login-form').on('submit', loginFormHandler);
+
 const registerFormHandler = async (event) => {
   event.preventDefault();
-  $('#registerMessage').remove();
-  const name = $('#registerName').val().trim();
-  const email = $('#registerEmail').val().trim();
-  const password = $('#registerPassword').val().trim();
-  const confirmPassword = $('#registerConfirmPassword').val().trim();
 
-  if (password !== confirmPassword || !/.{8,}/.test(password)) {
-    $('#registerForm').prepend($('<div>', {
-      class: "alert alert-danger",
-      id: "registerMessage",
-      html: "<span>Error: Passwords must match and be at least 8 characters long!</span>"
-    }));
-    return;
-  }
+  const name = $('#name-signup').val().trim();
+  const email = $('#email-signup').val().trim();
+  const password = $('#password-signup').val().trim();
 
   if (name && email && password) {
-    const response = await fetch('/api/user/', {
+
+    const response = await fetch('/api/users/', {
       method: 'POST',
-      body: JSON.stringify({ name: name, email: email, password:password }),
+      body: JSON.stringify({ username: name, email: email, password: password }),
+
       headers: { 'Content-Type': 'application/json' },
     });
 
     if (response.ok) {
+      // Display prompt
+      alert('You have been registered successfully!');
+
+      // Redirect user to the homepage or any other appropriate page
       document.location.replace('/');
     } else {
       const data = await response.json();
-
-      $('#registerForm').prepend($('<div>', {
-        class: "alert alert-danger",
-        id: "registerMessage",
-        html: `<span>Error: ${data.message}</span>`
-      }));
+      alert(data.message); // Show error message
     }
   }
 };
 
-$('#registerForm').on('submit', registerFormHandler);
+$('.signup-form').on('submit', registerFormHandler);
+
 

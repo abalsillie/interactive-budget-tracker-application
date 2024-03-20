@@ -1,25 +1,69 @@
-const newGoalFormHandler = async (event) => { // new goal handler
-    event.preventDefault(); // prevent reload
-    const title = document.querySelector('#title-new-spend'); // title value
-    const amount = document.querySelector('#amount-new-spend'); // amount value
-    const categories_id = document.querySelector('#category-id-new-spend'); // categories_id value
-    const weeks_id = document.querySelector('#weeks-id-new-spend'); // weeks_id value
-       if (title && amount && categories_id && weeks_id) {
+const newSpendFormHandler = async (event) => {
+  event.preventDefault();
+  const nameInput = document.querySelector('#name-new-spend');
+  const name = nameInput.value.trim();
+  const amountInput = document.querySelector('#amount-new-spend');
+  const amount = amountInput.value.trim();
+  const categoriesInput = document.querySelector('#category-id-new-spend');
+  const categories_id = categoriesInput.value.trim();
+  const weeksInput = document.querySelector('#weeks-id-new-spend');
+  const weeks = weeksInput.value.trim();
+
+  if (name && amount) {
+    try {
       const response = await fetch('/api/spends', {
-        method: 'POST', // POST request
-        body: JSON.stringify({ title, amount, categories_id, weeks_id }),
+        method: 'POST',
+        body: JSON.stringify({ name, amount, categories_id, weeks }),
         headers: { 'Content-Type': 'application/json' },
       });
       if (response.ok) {
-        document.location.replace('/dashboard'); // load dashboard if successful
+        const spendData = await response.json();
+        renderNewSpending(spendData);
+        nameInput.value = '';
+        amountInput.value = '';
+        // Clear other input fields if needed
       } else {
-        alert('Error'); // error if unsuccessful
+        alert('Error creating spend!');
       }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred. Please try again.');
     }
-  };
-  
-  // event listener on goal submit button
+  } else {
+    alert('Please enter a spend name and amount.');
+  }
+};
+
+const renderNewSpending = (spendData) => {
+  const spendList = document.querySelector('.spends-list');
+  const spendElement = document.createElement('div');
+  spendElement.innerHTML = `<p>${spendData.name}, Amount: ${spendData.amount}, Category: ${spendData.categories_id}, Week: ${spendData.weeks}</p>`;
+  spendList.appendChild(spendElement);
+};
+
+const renderSpends = async () => {
+  try {
+    const response = await fetch('/api/spends');
+    if (!response.ok) {
+      throw new Error('Failed to fetch spends.');
+    }
+    const spends = await response.json();
+    const spendList = document.querySelector('.spends-list');
+    spendList.innerHTML = '';
+    spends.forEach(spend => {
+      renderNewSpending(spend);
+    });
+  } catch (error) {
+    console.error('Error:', error);
+    alert('An error occurred while fetching spend. Please try again.');
+  }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderSpends();
+
   const newSpendForm = document.querySelector('.new-spend-form');
   if (newSpendForm) {
     newSpendForm.addEventListener('submit', newSpendFormHandler);
   }
+});

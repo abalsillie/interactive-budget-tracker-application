@@ -1,18 +1,15 @@
 //route handles CRUD operations for Spends
-
 const router = require('express').Router();
 const { Spends, Categories, Weeks } = require('../../models');
 //withAuths is custom security authentication middleware enabled by the  express.js infrustructure
 const withAuths = require('../../utils/auth');
-
 // C- Create route for a new Spend
-router.post('/', withAuths, async (req, res) => {
+router.post('/spends', async (req, res) => {
   try {
     const newSpend = await Spends.create({
       ...req.body,
       user_id: req.session.user_id,
     });
-
     res.status(200).json(newSpend);
   }
   catch (err) {
@@ -21,15 +18,15 @@ router.post('/', withAuths, async (req, res) => {
 });
 
 // R- Read route for a single spends with ist assigned category and assigned week
-router.get('/:id', withAuths, async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     //findOne vs. findByPk = findOne can use where: filtering for user_id data
     const oneSpend = await Spends.findOne({
-      where: {
-        id: req.params.id,
-        user_id: req.session.user_id,
-      },
-      include: 
+      // where: {
+      //   id: req.params.id,
+      //   user_id: req.session.user_id,
+      // },
+      include:
       [{ model: Categories,}]
       [{ model: Weeks,}]
     });
@@ -45,22 +42,24 @@ router.get('/:id', withAuths, async (req, res) => {
 });
 
 // U- update route for spend
-router.put('/:id', withAuths, async (req, res) => {
+router.put('/:id', async (req, res) => {
+
+
   try {
     //update method returns an array with number of affected rows
     const spends = await Spends.update(req.body,
       {
-      where: {
-        id: req.params.id, //correct category targeted
-        user_id: req.session.user_id, //session id matches user
-      },
+
+      // where: {
+      //   id: req.params.id, //correct category targeted
+      //   user_id: req.session.user_id, //session id matches user
+      // },
     });
 
     if (spends[0] === 0) {
       res.status(404).json({ message: 'This spend expense name was not updated for this user!' });
       return;
     }
-
     res.status(200).json({ message: 'Spend name was updated!' });
   } catch (err) {
     res.status(500).json(err);
@@ -68,9 +67,8 @@ router.put('/:id', withAuths, async (req, res) => {
 });
 
 // U- update route for spend's associated category NOTE we are taking info from user request at spendId and categoryId
-router.put('/:id', withAuths, async (req, res) => {
+router.put('/:id', async (req, res) => {
   const {spendId, categoryId} = req.params;
-
   try {
     //update method returns an array with number of affected rows
     const spendsCategory = await Spends.update({
@@ -91,23 +89,19 @@ router.put('/:id', withAuths, async (req, res) => {
       res.status(404).json({ message: 'This spend category was not updated for this user!' });
       return;
     }
-
-   
   } catch (err) {
     res.status(500).json(err);
   }
 });
-
 // D- Delete route for single category w. goal included
-router.delete('/:id', withAuths, async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const spendData = await Categories.destroy({
-      where: {
-        id: req.params.id,
-        user_id: req.session.user_id,
-      },
+      // where: {
+      //   id: req.params.id,
+      //   user_id: req.session.user_id,
+      // },
     });
-
     if (!categoryData) {
       res.status(404).json({ message: 'No category with this id is found!' });
       return;
@@ -117,16 +111,14 @@ router.delete('/:id', withAuths, async (req, res) => {
     res.status(500).json(err);
   }
 });
-
 // D- Delete route for all categories
-router.delete('/', withAuths, async (req, res) => {
+router.delete('/', async (req, res) => {
   try {
     const allCategoryData = await Categories.destroy({
-      where: {
-        user_id: req.session.user_id
-      },
+      // where: {
+      //   user_id: req.session.user_id
+      // },
     });
-
     if (allCategoryData === 0) {
       res.status(404).json({ message: 'No categories found for deletion!' });
       return;
@@ -137,6 +129,4 @@ router.delete('/', withAuths, async (req, res) => {
     res.status(500).json(err);
   }
 });
-
 module.exports = router;
-  

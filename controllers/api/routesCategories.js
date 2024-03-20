@@ -1,27 +1,23 @@
 //route handles CRUD operations for Categories
-
 const router = require('express').Router();
 const { Categories } = require('../../models/');
 //withAuths is custom security authentication middleware enabled by the express.js infrustructure
-const withAuths = require('../../utils/auth');
-
-// C- Create route for a new category 
-router.post('/', withAuths, async (req, res) => {
+const withAuth = require('../../utils/auth');
+// C- Create route for a new category
+router.post('/', async (req, res) => {
   try {
     const newCategory = await Categories.create({
       ...req.body,
       user_id: req.session.user_id,
     });
-
     res.status(200).json(newCategory);
   }
   catch (err) {
     res.status(404).json({ message: 'Error creating new category object!' });
   }
 });
-
 // R- Read route for a single category with goal incl.
-router.get('/:id', withAuths, async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     //findOne vs. findByPk = findOne can use where: filtering for user_id data
     const oneCategory = await Categories.findOne({
@@ -43,9 +39,8 @@ router.get('/:id', withAuths, async (req, res) => {
     res.status(500).json({ message: 'Cannot retrieve that particular category' })
   }
 });
-
 // U- update route for single category name
-router.put('/:id', withAuths, async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     //update method returns an array with number of affected rows
     const categoryName = await Categories.update(req.body
@@ -58,20 +53,17 @@ router.put('/:id', withAuths, async (req, res) => {
         user_id: req.session.user_id, //session id matches user
       },
     });
-
     if (categoryName[0] === 0) {
       res.status(404).json({ message: 'This category was not updated for this user!' });
       return;
     }
-
     res.status(200).json({ message: 'Category name was updated!' });
   } catch (err) {
     res.status(500).json(err);
   }
 });
-
 // D- Delete route for single category w. goal included
-router.delete('/:id', withAuths, async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const categoryData = await Categories.destroy({
       where: {
@@ -79,7 +71,6 @@ router.delete('/:id', withAuths, async (req, res) => {
         user_id: req.session.user_id,
       },
     });
-
     if (!categoryData) {
       res.status(404).json({ message: 'No category with this id is found!' });
       return;
@@ -89,16 +80,14 @@ router.delete('/:id', withAuths, async (req, res) => {
     res.status(500).json(err);
   }
 });
-
 // D- Delete route for all categories
-router.delete('/', withAuths, async (req, res) => {
+router.delete('/', async (req, res) => {
   try {
     const allCategoryData = await Categories.destroy({
       where: {
         user_id: req.session.user_id
       },
     });
-
     if (allCategoryData === 0) {
       res.status(404).json({ message: 'No categories found for deletion!' });
       return;
@@ -109,6 +98,4 @@ router.delete('/', withAuths, async (req, res) => {
     res.status(500).json(err);
   }
 });
-
 module.exports = router;
-

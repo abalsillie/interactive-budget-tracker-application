@@ -14,7 +14,7 @@ const updateCategoryFormHandler = async (event) => {
             headers: { "Content-Type": "application/json" },
         });
         if (response.ok) {
-            document.location.replace("/dashboard"); // load dashboard once submitted
+            document.location.replace("/categories"); // load dashboard once submitted
         } else {
             alert("Error"); // error
         }
@@ -28,7 +28,7 @@ const deleteCategoryFormHandler = async (event) => {
         method: "DELETE", // delete
     });
     if (response.ok) {
-        document.location.replace("/dashboard"); // load dashboard once deleted
+        document.location.replace("/categories"); // load dashboard once deleted
     } else {
         alert("Error"); // error
     }
@@ -54,7 +54,7 @@ const newCategoryFormHandler = async (event) => { // new category handler
         headers: { 'Content-Type': 'application/json' },
       });
       if (response.ok) {
-        document.location.replace('/dashboard'); // load dashboard if successful
+        document.location.replace('/categories'); // load dashboard if successful
       } else {
         alert(response.message); // error if unsuccessful
       }
