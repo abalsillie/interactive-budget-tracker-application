@@ -6,7 +6,7 @@ const { Goals, Categories, Weeks } = require('../../models');
 const withAuths = require('../../utils/auth');
 
 // C- Create route for a new week
-router.post('/', withAuths, async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const newWeek = await Weeks.create({
       ...req.body,
@@ -21,7 +21,7 @@ router.post('/', withAuths, async (req, res) => {
 });
 
 // R- Read route for a single week with w spends and categories/goals included
-router.get('/:id', withAuths, async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     //findOne vs. findByPk = findOne can use 'where:' filtering for user_id data directly at the where: rather than feeding params in
     const oneWeek = await Weeks.findOne({
@@ -46,7 +46,7 @@ router.get('/:id', withAuths, async (req, res) => {
 });
 
 // U- update route for single week name (all)
-router.put('/:id', withAuths, async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     //update method returns an array with number of affected rows
     const weekName = await Weeks.update(req.body, {
@@ -70,7 +70,7 @@ router.put('/:id', withAuths, async (req, res) => {
 });
 
 // U- update route for single week start date and autofill end date 7 days after
-router.put('/:id', withAuths, async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
 
     //same as beforeCreate hook on the Weeks model for autofill on end_date
@@ -102,7 +102,7 @@ router.put('/:id', withAuths, async (req, res) => {
 });
 
 //D- delete week
-router.delete('/:id', withAuths, async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const weekData = await Weeks.destroy({
       where: {

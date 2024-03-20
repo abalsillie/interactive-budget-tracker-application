@@ -6,7 +6,7 @@ const { Categories } = require('../../models/');
 const withAuths = require('../../utils/auth');
 
 // C- Create route for a new category 
-router.post('/', withAuths, async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const newCategory = await Categories.create({
       ...req.body,
@@ -21,7 +21,7 @@ router.post('/', withAuths, async (req, res) => {
 });
 
 // R- Read route for a single category with goal incl.
-router.get('/:id', withAuths, async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     //findOne vs. findByPk = findOne can use where: filtering for user_id data
     const oneCategory = await Categories.findOne({
@@ -45,7 +45,7 @@ router.get('/:id', withAuths, async (req, res) => {
 });
 
 // U- update route for single category name
-router.put('/:id', withAuths, async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     //update method returns an array with number of affected rows
     const categoryName = await Categories.update(req.body
@@ -71,7 +71,7 @@ router.put('/:id', withAuths, async (req, res) => {
 });
 
 // D- Delete route for single category w. goal included
-router.delete('/:id', withAuths, async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const categoryData = await Categories.destroy({
       where: {
@@ -91,7 +91,7 @@ router.delete('/:id', withAuths, async (req, res) => {
 });
 
 // D- Delete route for all categories
-router.delete('/', withAuths, async (req, res) => {
+router.delete('/', async (req, res) => {
   try {
     const allCategoryData = await Categories.destroy({
       where: {

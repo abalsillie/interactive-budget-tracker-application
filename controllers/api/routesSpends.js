@@ -6,7 +6,7 @@ const { Spends, Categories, Weeks } = require('../../models');
 const withAuths = require('../../utils/auth');
 
 // C- Create route for a new Spend
-router.post('/', withAuths, async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const newSpend = await Spends.create({
       ...req.body,
@@ -21,7 +21,7 @@ router.post('/', withAuths, async (req, res) => {
 });
 
 // R- Read route for a single spends with ist assigned category and assigned week
-router.get('/:id', withAuths, async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     //findOne vs. findByPk = findOne can use where: filtering for user_id data
     const oneSpend = await Spends.findOne({
@@ -45,7 +45,7 @@ router.get('/:id', withAuths, async (req, res) => {
 });
 
 // U- update route for spend
-router.put('/:id', withAuths, async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     //update method returns an array with number of affected rows
     const spends = await Spends.update(req.body,
@@ -68,7 +68,7 @@ router.put('/:id', withAuths, async (req, res) => {
 });
 
 // U- update route for spend's associated category NOTE we are taking info from user request at spendId and categoryId
-router.put('/:id', withAuths, async (req, res) => {
+router.put('/:id', async (req, res) => {
   const {spendId, categoryId} = req.params;
 
   try {
@@ -99,7 +99,7 @@ router.put('/:id', withAuths, async (req, res) => {
 });
 
 // D- Delete route for single category w. goal included
-router.delete('/:id', withAuths, async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const spendData = await Categories.destroy({
       where: {
@@ -119,7 +119,7 @@ router.delete('/:id', withAuths, async (req, res) => {
 });
 
 // D- Delete route for all categories
-router.delete('/', withAuths, async (req, res) => {
+router.delete('/', async (req, res) => {
   try {
     const allCategoryData = await Categories.destroy({
       where: {

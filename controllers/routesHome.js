@@ -39,7 +39,7 @@ router.post('/login', async (req, res) => {
 
 //categories also pulls in goals
 // R- Read route for all categories
-router.get('/categories', withAuths, async (req, res) => {
+router.get('/categories', async (req, res) => {
 
     try {
       const myCategories = await Categories.findAll({
@@ -61,7 +61,7 @@ router.get('/categories', withAuths, async (req, res) => {
 
   // R- Read route for all weeks w spends and categories/goals included
   //weeks route also pulls in categories and goals
-router.get('/weeks', withAuths, async (req, res) => {
+router.get('/weeks', async (req, res) => {
     try {
       const myWeeks = await Weeks.findAll({
         //making sure the categories retrieved are from the user int his user session
@@ -85,7 +85,7 @@ router.get('/weeks', withAuths, async (req, res) => {
 
   //spends also pulls in categories and weeks data
   // R- Read route for a all spends brings in assigned categories and weeks also
-router.get('/spends', withAuths, async (req, res) => {
+router.get('/spends', async (req, res) => {
   try {
      const allSpends = await Spends.findOne({
       where: {

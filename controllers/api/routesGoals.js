@@ -6,7 +6,7 @@ const { Goals } = require('../../models');
 const withAuths = require('../../utils/auth');
 
 //C- Create route for a new goal
-router.post('/', withAuths, async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const newGoal = await Goals.create({
       ...req.body,
@@ -21,7 +21,7 @@ router.post('/', withAuths, async (req, res) => {
 });
 
 // R- Read route for a single goal
-router.get('/:id', withAuths, async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     //findOne vs. findByPk = findOne can use where: filtering for user_id data
     const oneGoal = await Goals.findOne({
@@ -42,7 +42,7 @@ router.get('/:id', withAuths, async (req, res) => {
 });
 
 // U- update route for goals
-router.put('/:id', withAuths, async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     //update method returns an array with number of affected rows
     const goalAmount = await Goals.update(req.body, {
@@ -64,7 +64,7 @@ router.put('/:id', withAuths, async (req, res) => {
 });
 
 //D- delete goal
-router.delete('/:id', withAuths, async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const goalData = await Goals.destroy({
       where: {
@@ -85,7 +85,7 @@ router.delete('/:id', withAuths, async (req, res) => {
 });
 
 //D- delete all goal
-router.delete('/', withAuths, async (req, res) => {
+router.delete('/', async (req, res) => {
   try {
     const allGoalData = await Goals.destroy({
       where: {
