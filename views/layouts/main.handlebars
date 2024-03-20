@@ -29,9 +29,11 @@
           <!-- if logged in button says log out, if logged out, button says log in -->
           <li class="nav-item">
             {{#if loggedIn}}
-            <a id="logout" class="btn btn-outline-light py-2 px-3" href="/">LogOut</a>
+            <a id="logout" class="btn btn-outline-light py-2 px-3" style="background-color: #ff69b4;"
+              href="/">LogOut</a>
             {{else}}
-            <a href="/login" id="login" class="btn btn-outline-light py-2 px-3">Log In</a>
+            <a href="/login" id="login" class="btn btn-outline-light py-2 px-3" style="background-color: #ff69b4;">Log
+              In</a>
             {{/if}}
           </li>
         </ul>

@@ -36,6 +36,26 @@ router.get('/dashboard', async (req, res) => {
     }
 });
 
+//spends also pulls in categories and weeks data
+// R- Read route for a all spends brings in assigned categories and weeks also
+router.get('/spends', async (req, res) => {
+    try {
+        const allSpends = await Spends.findAll({
+            // where: {
+            //     id: req.params.id,
+            //     user_id: req.session.user_id,
+            // },
+            include:
+                [{ model: Categories, }]
+                [{ model: Weeks, }]
+        });
+        res.render('partials/spends', {...allSpends });
+    }
+    catch (err) {
+        res.status(500).json({ message: 'Cannot retrieve your spend expenses' })
+    }
+});
+
 //route for categories
 router.get('/categories', async (req, res) => {
 
@@ -49,7 +69,7 @@ router.get('/categories', async (req, res) => {
                 model: Goals,
             }]
         });
-        res.render('partials/categories', { ...myCategories });
+        res.render('/partials/categories', { ...myCategories });
     }
     catch (err) {
 
@@ -98,25 +118,7 @@ router.get('/weeks', async (req, res) => {
         res.status(500).json({ message: 'Cannot retrieve all weeks for user' })
     }
 });
-//spends also pulls in categories and weeks data
-// R- Read route for a all spends brings in assigned categories and weeks also
-router.get('/spends', async (req, res) => {
-    try {
-        const allSpends = await Spends.findAll({
-            // where: {
-            //     id: req.params.id,
-            //     user_id: req.session.user_id,
-            // },
-            include:
-                [{ model: Categories, }]
-                [{ model: Weeks, }]
-        });
-        res.render('partials/spends', ...allSpends);
-    }
-    catch (err) {
-        res.status(500).json({ message: 'Cannot retrieve your spend expenses' })
-    }
-});
+
 //POST
 router.post('/login', async (req, res) => {
     try {
