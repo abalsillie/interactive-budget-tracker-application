@@ -25,9 +25,7 @@ router.get('/:id', async (req, res) => {
         id: req.params.id,
         user_id: req.session.user_id,
       },
-      include: [{
-        model: Goals,
-      }]
+
     });
     if (!oneCategory) {
       res.status(404).json({ message: 'No category with this id found' });
@@ -45,14 +43,14 @@ router.put('/:id', async (req, res) => {
     //update method returns an array with number of affected rows
     const categoryName = await Categories.update(req.body
       // {
-    //   name: req.body.name, //field to update
-    // }
-    , {
-      where: {
-        id: req.params.id, //correct category targeted
-        user_id: req.session.user_id, //session id matches user
-      },
-    });
+      //   name: req.body.name, //field to update
+      // }
+      , {
+        where: {
+          id: req.params.id, //correct category targeted
+          user_id: req.session.user_id, //session id matches user
+        },
+      });
     if (categoryName[0] === 0) {
       res.status(404).json({ message: 'This category was not updated for this user!' });
       return;

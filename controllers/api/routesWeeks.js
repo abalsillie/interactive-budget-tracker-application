@@ -1,7 +1,7 @@
 
 //route handles CRUD operations for Weeks
 const router = require('express').Router();
-const { Goals, Categories, Weeks } = require('../../models');
+const { Categories, Weeks, Spends } = require('../../models');
 //withAuths is custom security authentication middleware enabled by the  express.js infrustructure
 const withAuths = require('../../utils/auth');
 // C- Create route for a new week
@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// R- Read route for a single week with w spends and categories/goals included
+// R- Read route for a single week with w spends and categories included
 router.get('/:id', async (req, res) => {
   try {
     //findOne vs. findByPk = findOne can use 'where:' filtering for user_id data directly at the where: rather than feeding params in
@@ -27,10 +27,11 @@ router.get('/:id', async (req, res) => {
         id: req.params.id,
         user_id: req.session.user_id,
       },
-      include:
-        [{ model: Categories, include: [Goals] },
+      include: [
+        { model: Categories },
         { model: Spends },
-        ]
+      ]
+
     });
     if (!oneWeek) {
       res.status(404).json({ message: 'No week with this id found' });
@@ -63,7 +64,7 @@ router.put('/:id', async (req, res) => {
     res.status(500).json(err);
   }
 
-  
+
 });
 // U- update route for single week start date and autofill end date 7 days after
 router.put('/:id', async (req, res) => {

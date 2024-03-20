@@ -27,14 +27,14 @@ router.get('/:id', async (req, res) => {
       //   user_id: req.session.user_id,
       // },
       include:
-      [{ model: Categories,}]
-      [{ model: Weeks,}]
+        [{ model: Categories, }]
+        [{ model: Weeks, }]
     });
-    if (!oneSpend ) {
+    if (!oneSpend) {
       res.status(404).json({ message: 'No spend expense with this id found' });
       return;
     }
-    res.status(200).json(oneSpend );
+    res.status(200).json(oneSpend);
   }
   catch (err) {
     res.status(500).json({ message: 'Cannot retrieve that particular spend expense' })
@@ -50,11 +50,11 @@ router.put('/:id', async (req, res) => {
     const spends = await Spends.update(req.body,
       {
 
-      // where: {
-      //   id: req.params.id, //correct category targeted
-      //   user_id: req.session.user_id, //session id matches user
-      // },
-    });
+        // where: {
+        //   id: req.params.id, //correct category targeted
+        //   user_id: req.session.user_id, //session id matches user
+        // },
+      });
 
     if (spends[0] === 0) {
       res.status(404).json({ message: 'This spend expense name was not updated for this user!' });
@@ -68,24 +68,27 @@ router.put('/:id', async (req, res) => {
 
 // U- update route for spend's associated category NOTE we are taking info from user request at spendId and categoryId
 router.put('/:id', async (req, res) => {
-  const {spendId, categoryId} = req.params;
+  const { spendId, categoryId } = req.params;
   try {
     //update method returns an array with number of affected rows
     const spendsCategory = await Spends.update({
-      categories_id: categoryId,}, //need body from update input to call 'categoryId'
-     {  where: {
-        id: spendId, //need body from update input to call 'spendId'
-        user_id: req.session.user_id, //session id matches user
-      },
-    });
-//returning the updated category on the spend by primary key
+      categories_id: categoryId,
+    }, //need body from update input to call 'categoryId'
+      {
+        where: {
+          id: spendId, //need body from update input to call 'spendId'
+          user_id: req.session.user_id, //session id matches user
+        },
+      });
+    //returning the updated category on the spend by primary key
     if (spendsCategory[0] > 0) {
       //fetch the updated spend data
       const updatedSpendCategory = await Spends.findByPk(spendId, {
-        include: [{ model: Categories}],
+        include: [{ model: Categories }],
       });
-      res.status(200).json(updatedSpendCategory);}
-      else{
+      res.status(200).json(updatedSpendCategory);
+    }
+    else {
       res.status(404).json({ message: 'This spend category was not updated for this user!' });
       return;
     }

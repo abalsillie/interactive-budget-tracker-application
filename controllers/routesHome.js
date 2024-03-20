@@ -1,6 +1,6 @@
 //everything here responds to ('/')
 const router = require('express').Router();
-const { Goals, Categories, Spends, User, Weeks } = require('../models');
+const { Categories, Spends, User, Weeks } = require('../models');
 const withAuths = require('../utils/auth');
 
 //GET
@@ -40,16 +40,26 @@ router.get('/dashboard', async (req, res) => {
 // R- Read route for a all spends brings in assigned categories and weeks also
 router.get('/spends', async (req, res) => {
     try {
+        console.log('Fetching spends from the database...');
         const allSpends = await Spends.findAll({
             // where: {
             //     id: req.params.id,
             //     user_id: req.session.user_id,
             // },
             include:
-                [{ model: Categories, }]
-                [{ model: Weeks, }]
+                [{ model: Categories, attributes: ['name'] },
+                { model: Weeks, attributes: 'name' }]
         });
-        res.render('partials/spends', {...allSpends });
+        console.log('Spends fetched successfully:', allSpends);
+
+
+        if (allSpends.length === 0) {
+            console.log('No spends found, rendering no-data partial...');
+            // Render the no-spend-data partial if there are no spends
+            return res.render('partials/no-data', {});
+        }
+        console.log('Rendering spends partial...');
+        res.render('partials/spends', { ...allSpends });
     }
     catch (err) {
         res.status(500).json({ message: 'Cannot retrieve your spend expenses' })
@@ -65,9 +75,6 @@ router.get('/categories', async (req, res) => {
             // where: {
             //  user_id: req.session.user_id,
             // },
-            include: [{
-                model: Goals,
-            }]
         });
         res.render('/partials/categories', { ...myCategories });
     }
@@ -78,25 +85,6 @@ router.get('/categories', async (req, res) => {
     }
 });
 
-router.get('/goals', async (req, res) => {
-    try {
-        const mygoals = await Goals.findAll({
-            where: {
-                user_id: req.session.user_id, // Assuming user ID is stored in session
-            },
-            include: [{
-                model: Goals,
-            }]
-        });
-        res.render('partials/goals', { mygoals }); // Pass mygoals directly to the template
-    }
-    catch (err) {
-        console.error(err); // Log the error for debugging
-        res.status(500).json({ message: 'Cannot retrieve all goals for user' });
-    }
-});
-// R- Read route for all weeks w spends and categories/goals included
-//weeks route also pulls in categories and goals
 router.get('/weeks', async (req, res) => {
     try {
         const myWeeks = await Weeks.findAll({
@@ -105,10 +93,7 @@ router.get('/weeks', async (req, res) => {
             //     user_id: req.session.user_id,
             // },
             include: [
-                {
-                    model: Categories,
-                    include: [Goals]
-                },
+                { model: Categories },
                 { model: Spends },
             ]
         });
@@ -122,7 +107,7 @@ router.get('/weeks', async (req, res) => {
 //POST
 router.post('/login', async (req, res) => {
     try {
-      
+
         res.redirect('/homepage');
     } catch (err) {
         // Handle login errors

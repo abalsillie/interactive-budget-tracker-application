@@ -1,12 +1,11 @@
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense Tracker</title>
-   </head>
+{{#each spends}}
+<div>
+<p>{{name}}</p>
+<p>{{amount}}</p>
+<p>{{categories.name}}</p>
+<p>{{weeks.name}}</p>
+</div>
+{{/each}}
 
 <body>
     <h1>Create Spends</h1>
@@ -70,45 +69,13 @@
 
 <!-- also handles deletion -->
 
-{{!-- individual spend view modal --}}
-
-<div class="modal fade" id="entryModal" tabindex="-1" aria-labelledby="entryModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div id="newExpenseHeader" class="modal-header">
-        <h1 class="modal-title fs-5" id="entryModalLabel"></h1>
-        <button id="closeBtnHeader" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid">
-          <form id="new-spend-form" class="form d-flex">
-            <div class="col-12 flex">
-              <input type="hidden" name="id" class="form-control">
-              <div class=" mb-4 mx-2">
-                <label for="title-new-spend" class="form-label">Expense Title:</label>
-                <input type="text" name="title-new-spend" class="form-control">
-              </div>
-              <div class=" mb-4 mx-2">
-                <label for="amount-new-spend" class="form-label">Expense Amount:</label>
-                <input type="text" name="amount-new-spend" class="form-control">
-              </div>
-              <div class=" mb-4 mx-2">
-                <label for="category-id-new-spend" class="form-label">Category:</label>
-                <input type="text" name="category-id-new-spend" class="form-control">
-              </div>
-              <div class=" mb-4 mx-2">
-                <label for="weeks-id-new-spend" class="form-label">Week Number:</label>
-                <input type="text" name="weeks-id-new-spend" class="form-control">
-              </div>
-            </div>
-          </form>
-        </div>
-        <div id="catFormFields">
-          {{> new-category}}
-        </div>
-        <button id="sub-new-expense" type="button" class="btn">Save</button>
-        <button id="closeBtnFooter" type="button" class="btn" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
+<!-- Display spends -->
+{{#each allSpends}}
+<div>
+    <p>Title: {{title}}</p>
+    <p>Amount: {{amount}}</p>
+    <p>Category: {{category.name}}</p>
+    <p>Week: {{week.name}}</p>
+    <!-- Add edit and delete buttons here -->
 </div>
+{{/each}}

@@ -1,10 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Categories</title>
-</head>
 <body>
     <main class="container mt-5">
         <h1>Create Category</h1>
@@ -34,6 +27,14 @@
         </form>
     </main>
 
-    <script src="categories.js"></script>
-</body>
-</html>
+    <!-- Handlebars Template -->
+    <script id="category-template" type="text/x-handlebars-template">
+        {{#each categories}}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{name}}</h5>
+                <p class="card-text">Category ID: {{id}}</p>
+                <!-- Add other category details here if needed -->
+            </div>
+        </div>
+        {{/each}}
