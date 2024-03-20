@@ -3,7 +3,9 @@ const router = require('express').Router();
 const { Goals, Categories, Spends, User, Weeks } = require('../models');
 const withAuths = require('../utils/auth');
 
+//GET
 
+//homepage route homepage will redirect to logged in or not logged in 
 router.get('/', async (req, res) => {
     try {
         res.render('homepage', { //express looks for homepage within handlebars
@@ -14,6 +16,8 @@ router.get('/', async (req, res) => {
         res.status(500).json(err);
     }
 });
+
+//this repsonds to the button clicks for login and serves up the login.handelbars
 router.get('/login', (req, res) => {
     if (req.session.logged_in) {
         res.redirect('/');
@@ -22,20 +26,17 @@ router.get('/login', (req, res) => {
     res.render('login');
 });
 
-router.post('/login', async (req, res) => {
+//route for dashboard
+router.get('/dashboard', async (req, res) => {
     try {
-        // Your login logic goes here
-        // Assuming login is successful and req.session.logged_in is set to true
-        // Redirect the user to the homepage_handlebar upon successful login
-        res.redirect('/homepage');
+        // Your logic to render the dashboard.handlebars file
+        res.render('dashboard');
     } catch (err) {
-        // Handle login errors
-        res.status(500).json({ message: 'Error occurred during login' });
+        res.status(500).json(err);
     }
 });
 
-//categories also pulls in goals
-// R- Read route for all categories
+//route for categories
 router.get('/categories', async (req, res) => {
 
     try {
@@ -43,13 +44,12 @@ router.get('/categories', async (req, res) => {
             //making sure the categories retrieved are from the user int his user session
             // where: {
             //  user_id: req.session.user_id,
-            //     user_id: 1,
             // },
             include: [{
                 model: Goals,
             }]
         });
-        res.render('categories', { ...myCategories });
+        res.render('partials/categories', { ...myCategories });
     }
     catch (err) {
 
@@ -68,7 +68,7 @@ router.get('/goals', async (req, res) => {
                 model: Goals,
             }]
         });
-        res.render('goals', { mygoals }); // Pass mygoals directly to the template
+        res.render('partials/goals', { mygoals }); // Pass mygoals directly to the template
     }
     catch (err) {
         console.error(err); // Log the error for debugging
@@ -92,7 +92,7 @@ router.get('/weeks', async (req, res) => {
                 { model: Spends },
             ]
         });
-        res.render('weeks', { ...myWeeks });
+        res.render('partials/weeks', { ...myWeeks });
     }
     catch (err) {
         res.status(500).json({ message: 'Cannot retrieve all weeks for user' })
@@ -111,12 +111,24 @@ router.get('/spends', async (req, res) => {
                 [{ model: Categories, }]
                 [{ model: Weeks, }]
         });
-        res.render('spends', ...allSpends);
+        res.render('partials/spends', ...allSpends);
     }
     catch (err) {
         res.status(500).json({ message: 'Cannot retrieve your spend expenses' })
     }
 });
+//POST
+router.post('/login', async (req, res) => {
+    try {
+      
+        res.redirect('/homepage');
+    } catch (err) {
+        // Handle login errors
+        res.status(500).json({ message: 'Error occurred during login' });
+    }
+});
+
+
 //restful api = post associated with changes
 router.post('/logout', (req, res) => {
     if (req.session.logged_in) {

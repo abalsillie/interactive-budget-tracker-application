@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories</title>
+</head>
+<body>
+    <main class="container mt-5">
+        <h1>Create Category</h1>
+        <form class="new-category-form mb-3">
+            <div class="mb-3">
+                <label for="name-new-category" class="form-label">Category Name:</label>
+                <input type="text" id="name-new-category" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+
+        <h1>Categories</h1>
+        <div class="category-list">
+            <!-- Categories will be rendered here -->
+        </div>
+    </main>
+
+    <main class="container mt-5">
+        <h1 class="mb-4">Edit Category</h1>
+        <form class="update-category-form mb-3">
+            <div class="mb-3">
+                <label for="name-update-category" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name-update-category" placeholder="Enter category name" value="{{name}}" />
+            </div>
+            <button type="submit" id="update-category" class="btn btn-primary">Save</button>
+            <button type="button" id="delete-category" class="btn btn-danger">Delete</button>
+        </form>
+    </main>
+
+    <script src="categories.js"></script>
+</body>
+</html>

@@ -13,31 +13,31 @@
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg" style="background-color: #ff69b4; padding: 1rem 1rem;">
-  <div class="container-fluid">
-    <!-- Logo on the left -->
-    <a class="navbar-brand" href="#" style="margin-right: auto;">
-      <img src="images/Logo.png" alt="Cossy Livs Budget" width="60" height="60">
-    </a>
-    <!-- Central title -->
-    <div class="d-flex justify-content-center align-items-center w-100">
+  <nav class="navbar navbar-expand-lg" style="background-color: #ff69b4; padding: 1rem 1rem;">
+    <div class="container-fluid">
+      <!-- Logo on the left -->
+      <a class="navbar-brand" href="#" style="margin-right: auto;">
+        <img src="images/Logo.png" alt="Cossy Livs Budget" width="60" height="60">
+      </a>
+      <!-- Central title -->
+      <div class="d-flex justify-content-center align-items-center w-100">
         <h2 class="m-0 text-white">Cossy Livs Budget</h2>
+      </div>
+      <!-- Navbar items -->
+      <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <!-- if logged in button says log out, if logged out, button says log in -->
+          <li class="nav-item">
+            {{#if loggedIn}}
+            <a id="logout" class="btn btn-outline-light py-2 px-3" href="/">LogOut</a>
+            {{else}}
+            <a href="/login" id="login" class="btn btn-outline-light py-2 px-3">Log In</a>
+            {{/if}}
+          </li>
+        </ul>
+      </div>
     </div>
-    <!-- Navbar items -->
-    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-      <ul class="navbar-nav">
-        <!-- if logged in button says log out, if logged out, button says log in -->
-        <li class="nav-item">
-          {{#if loggedIn}}
-          <a id="logout" class="btn btn-outline-light py-2 px-3" href="/">LogOut</a>
-          {{else}}
-          <a href="/login-modal.handlebars" id="login" class="btn btn-outline-light py-2 px-3" data-bs-toggle="modal" data-bs-target="#loginModal">LogIn</a>
-          {{/if}}
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+  </nav>
 
 
 
@@ -50,11 +50,11 @@
   </footer>
 
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+    crossorigin="anonymous"></script>
 
 
   <script src="/js/editGoals.js"></script>
@@ -63,8 +63,9 @@
   <script src="/js/login.js"></script>
   <script src="/js/logout.js"></script>
   <script src="/js/newCategory.js"></script>
+  {{!--
   <script src="/js/newGoals.js"></script>
-  <script src="/js/newWeeks.js"></script>
+  <script src="/js/newWeeks.js"></script> --}}
   <script type="module" src="/js/bargraph.js"></script>
 
 

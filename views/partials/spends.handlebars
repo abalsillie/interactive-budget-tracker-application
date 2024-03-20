@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+   </head>
+
+<body>
+    <h1>Create Spends</h1>
+    <form class="new-spend-form">
+        <div class="form-group">
+            <label for="name-new-spend">Spend Name:</label>
+            <input type="text" id="name-new-spend" required>
+        </div>
+        <div class="form-group">
+            <label for="amount-new-spend">Amount:</label>
+            <input type="text" id="amount-new-spend" required>
+        </div>
+        <div class="form-group">
+            <label for="category-id-new-spend">Category:</label>
+            <input type="text" id="category-id-new-spend" required>
+        </div>
+        <div class="form-group">
+            <label for="weeks-id-new-spend">Week:</label>
+            <input type="text" id="weeks-id-new-spend" required>
+        </div>
+        <button type="submit" class="Button">Save</button>
+    </form>
+
+    <h1>Expense List</h1>
+    <div class="spends-list">
+        <!-- Categories will be rendered here -->
+    </div>
+
+    <script src="spends.js"></script>
+</body>
+
+</html>
+
+<!-- editSpends.js -->
+
+<main class="container mt-5">
+  <h1 class="mb-4">Edit</h1>
+  <form class="update-spend-form" class="mb-3">
+    <div class="mb-3">
+      <label for="title-update-spend" class="form-label">Title</label>
+      <input type="text" class="form-control" id="title-update-spend" placeholder="Enter spend title"
+        value="{{title}}" />
+    </div>
+    <div class="mb-3">
+      <label for="amount-update-spend" class="form-label">Amount</label>
+      <input type="text" class="form-control" id="amount-update-spend" placeholder="Enter spend amount"
+        value="{{amount}}" />
+    </div>
+    <div class="mb-3">
+      <input type="text" class="form-control" id="spend-category" value="{{categories_id}}" disabled>
+      <label for="spend-category" class="form-label">Category</label>
+    </div>
+    <div class="mb-3">
+      <input type="text" class="form-control" id="spend-week" value="{{weeks_id}}" disabled>
+      <label for="spend-week" class="form-label">Week</label>
+    </div>
+    <button type="submit" id="update-spend" class="btn btn-primary">Save</button>
+    <button type="button" id="delete-spend" class="btn btn-danger">Delete</button>
+  </form>
+</main>
+
+<!-- also handles deletion -->
+
+{{!-- individual spend view modal --}}
+
+<div class="modal fade" id="entryModal" tabindex="-1" aria-labelledby="entryModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div id="newExpenseHeader" class="modal-header">
+        <h1 class="modal-title fs-5" id="entryModalLabel"></h1>
+        <button id="closeBtnHeader" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <form id="new-spend-form" class="form d-flex">
+            <div class="col-12 flex">
+              <input type="hidden" name="id" class="form-control">
+              <div class=" mb-4 mx-2">
+                <label for="title-new-spend" class="form-label">Expense Title:</label>
+                <input type="text" name="title-new-spend" class="form-control">
+              </div>
+              <div class=" mb-4 mx-2">
+                <label for="amount-new-spend" class="form-label">Expense Amount:</label>
+                <input type="text" name="amount-new-spend" class="form-control">
+              </div>
+              <div class=" mb-4 mx-2">
+                <label for="category-id-new-spend" class="form-label">Category:</label>
+                <input type="text" name="category-id-new-spend" class="form-control">
+              </div>
+              <div class=" mb-4 mx-2">
+                <label for="weeks-id-new-spend" class="form-label">Week Number:</label>
+                <input type="text" name="weeks-id-new-spend" class="form-control">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div id="catFormFields">
+          {{> new-category}}
+        </div>
+        <button id="sub-new-expense" type="button" class="btn">Save</button>
+        <button id="closeBtnFooter" type="button" class="btn" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

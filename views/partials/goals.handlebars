@@ -4,3 +4,42 @@
     <p>{{categories_id}}</p>
 </div>
 {{/each}}
+
+<!-- editGoals.js -->
+
+<main class="container mt-5">
+  <h1 class="mb-4">Edit</h1>
+  <form class="update-goals-form" class="mb-3">
+    <div class="mb-3">
+      <label for="name-update-goal" class="form-label">Name</label>
+      <input type="text" class="form-control" id="name-update-goal" placeholder="Enter goal name" value="{{name}}" />
+    </div>
+    <div class="mb-3">
+      <input type="text" class="form-control" id="spend-category" value="{{categories_id}}" disabled>
+      <label for="spend-category" class="form-label">Category</label>
+    </div>
+    <button type="submit" id="update-goal" class="btn btn-primary">Save</button>
+    <button type="button" id="delete-goal" class="btn btn-danger">Delete</button>
+  </form>
+</main>
+
+<!-- also handles deletion -->
+
+<!-- newGoal.js -->
+
+<div class="container mt-5">
+  <h2 class="mb-4">New Goal</h2>
+  <form class="new-goal-form">
+    <div class="mb-3">
+      <label for="category-id-new-goal" class="form-label">Category:</label>
+      <input type="text" class="form-control" id="category-id-new-goal" />
+    </div>
+    <div class="mb-3">
+      <label for="amount-new-goal" class="form-label">Amount:</label>
+      <input type="text" class="form-control" id="amount-new-goal" />
+    </div>
+    <div class="mb-3">
+      <button type="submit" class="btn btn-primary">Create</button>
+    </div>
+  </form>
+</div>

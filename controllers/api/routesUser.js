@@ -2,6 +2,8 @@
 const router = require('express').Router();
 const { User } = require('../../models');
 const withAuths = require('../../utils/auth');
+
+
 //create new user
 router.post('/', async (req, res) => {
     try {
@@ -15,6 +17,8 @@ router.post('/', async (req, res) => {
         res.status(400).json(err);
     }
 });
+
+//log in a user
 router.post('/login', async (req, res) => {
     try {
         //finds user
@@ -45,6 +49,7 @@ router.post('/login', async (req, res) => {
         res.status(400).json(err);
     }
 });
+
 router.post('/logout', (req, res) => {
     if (req.session.logged_in) {
         req.session.destroy(() => {
@@ -54,6 +59,7 @@ router.post('/logout', (req, res) => {
         res.status(404).end();
     }
 });
+
 router.delete('/:id', async (req, res) => {
     try {
         // Check if the user deleting the account is the account owner
