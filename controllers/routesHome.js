@@ -60,25 +60,22 @@ router.get('/spends', async (req, res) => {
     }
 });
 
-//route for categories
+// Route for rendering the categories page
 router.get('/categories', async (req, res) => {
-
     try {
-        const myCategories = await Categories.findAll({
-            //making sure the categories retrieved are from the user int his user session
-            // where: {
-            //  user_id: req.session.user_id,
-            // },
-        });
-        const categories = myCategories.map(week => week.get({ plain: true }));
+        const categories = await Categories.findAll()
+        //     {
+        //     where: {
+        //         user_id: req.session.user_id
+        //     }
+        // });
         res.render('categories', { categories });
-    }
-    catch (err) {
-
-        res.status(500).json({ message: 'Cannot retrieve all categories for user' })
-
+    } catch (err) {
+        console.error('Error fetching categories:', err);
+        res.status(500).json({ message: 'Cannot retrieve all categories for user' });
     }
 });
+
 
 // GET WEEKS
 router.get('/weeks', async (req, res) => {
