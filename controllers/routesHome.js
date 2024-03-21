@@ -1,7 +1,11 @@
 //everything here responds to ('/')
 const router = require('express').Router();
-const { Goals, Categories, Spends, User, Weeks } = require('../models');
+const { Categories, Spends, User, Weeks } = require('../models');
 const withAuths = require('../utils/auth');
+
+//GET
+
+//homepage route homepage will redirect to logged in or not logged in 
 router.get('/', async (req, res) => {
     try {
         res.render('homepage', { //express looks for homepage within handlebars
@@ -12,6 +16,8 @@ router.get('/', async (req, res) => {
         res.status(500).json(err);
     }
 });
+
+//this repsonds to the button clicks for login and serves up the login.handelbars
 router.get('/login', (req, res) => {
     if (req.session.logged_in) {
         res.redirect('/');
@@ -20,61 +26,58 @@ router.get('/login', (req, res) => {
     res.render('login');
 });
 
-router.post('/login', async (req, res) => {
+//route for dashboard
+router.get('/dashboard', async (req, res) => {
     try {
-        // Your login logic goes here
-        // Assuming login is successful and req.session.logged_in is set to true
-        // Redirect the user to the homepage_handlebar upon successful login
-        res.redirect('/homepage');
+        // Your logic to render the dashboard.handlebars file
+        res.render('dashboard');
     } catch (err) {
-        // Handle login errors
-        res.status(500).json({ message: 'Error occurred during login' });
+        res.status(500).json(err);
     }
 });
 
-//categories also pulls in goals
-// R- Read route for all categories
-router.get('/categories', async (req, res) => {
-
+//spends also pulls in categories and weeks data
+// R- Read route for a all spends brings in assigned categories and weeks also
+router.get('/spends', async (req, res) => {
     try {
-        const myCategories = await Categories.findAll({
-            //making sure the categories retrieved are from the user int his user session
+        console.log('Fetching spends from the database...');
+        const allSpends = await Spends.findAll({
             // where: {
-            //  user_id: req.session.user_id,
-            //     user_id: 1,
+            //     id: req.params.id,
+            //     user_id: req.session.user_id,
             // },
-            include: [{
-                model: Goals,
-            }]
+            include:
+                [{ model: Categories, attributes: ['name'] },
+                { model: Weeks, attributes: 'name' }]
         });
-        res.render('categories', { ...myCategories });
+        console.log('Spends fetched successfully:', allSpends);
+
+        const spends = allSpends.map(week => week.get({ plain: true }));
+        res.render('spends', { spends });
     }
     catch (err) {
-
-        res.status(500).json({ message: 'Cannot retrieve all categories for user' })
-
+        res.status(500).json({ message: 'Cannot retrieve your spend expenses' })
     }
 });
 
-router.get('/goals', async (req, res) => {
+// Route for rendering the categories page
+router.get('/categories', async (req, res) => {
     try {
-        const mygoals = await Goals.findAll({
-            where: {
-                user_id: req.session.user_id, // Assuming user ID is stored in session
-            },
-            include: [{
-                model: Goals,
-            }]
-        });
-        res.render('goals', { mygoals }); // Pass mygoals directly to the template
-    }
-    catch (err) {
-        console.error(err); // Log the error for debugging
-        res.status(500).json({ message: 'Cannot retrieve all goals for user' });
+        const categories = await Categories.findAll()
+        //     {
+        //     where: {
+        //         user_id: req.session.user_id
+        //     }
+        // });
+        res.render('categories', { categories });
+    } catch (err) {
+        console.error('Error fetching categories:', err);
+        res.status(500).json({ message: 'Cannot retrieve all categories for user' });
     }
 });
-// R- Read route for all weeks w spends and categories/goals included
-//weeks route also pulls in categories and goals
+
+
+// GET WEEKS
 router.get('/weeks', async (req, res) => {
     try {
         const myWeeks = await Weeks.findAll({
@@ -83,38 +86,31 @@ router.get('/weeks', async (req, res) => {
             //     user_id: req.session.user_id,
             // },
             include: [
-                {
-                    model: Categories,
-                    include: [Goals]
-                },
+                { model: Categories },
                 { model: Spends },
             ]
         });
-        res.render('weeks', { ...myWeeks });
+
+        const weeks = myWeeks.map(week => week.get({ plain: true }));
+        res.render('weeks', { weeks });
     }
     catch (err) {
         res.status(500).json({ message: 'Cannot retrieve all weeks for user' })
     }
 });
-//spends also pulls in categories and weeks data
-// R- Read route for a all spends brings in assigned categories and weeks also
-router.get('/spends', async (req, res) => {
+
+//POST
+router.post('/login', async (req, res) => {
     try {
-        const allSpends = await Spends.findAll({
-            // where: {
-            //     id: req.params.id,
-            //     user_id: req.session.user_id,
-            // },
-            include:
-                [{ model: Categories, }]
-                [{ model: Weeks, }]
-        });
-        res.render('spends', ...allSpends);
-    }
-    catch (err) {
-        res.status(500).json({ message: 'Cannot retrieve your spend expenses' })
+
+        res.redirect('/homepage');
+    } catch (err) {
+        // Handle login errors
+        res.status(500).json({ message: 'Error occurred during login' });
     }
 });
+
+
 //restful api = post associated with changes
 router.post('/logout', (req, res) => {
     if (req.session.logged_in) {

@@ -1,6 +1,6 @@
+{{!-- // This page ensures that if the user is logged in we render DASHBOARD and if not we render LANDING --}}
 {{#if loggedIn}}
-{{> homepage-dashboard}}
-
-{{else }}
-{{> homepage-landing}}
-{{/if }}
+    {{> dashboard}}
+{{else}}
+    {{> homepage-landing}}
+{{/if}}

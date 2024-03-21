@@ -1,6 +1,40 @@
 {{#each weeks}}
 <div>
-    <p>{{id}}</p>
-    <p>{{name}}</p>
+<p>{{name}}</p>
 </div>
 {{/each}}
+<!-- newweek.js -->
+
+<div class="container mt-5">
+  <h2 class="mb-4">New Week</h2>
+  <form class="new-week-form">
+   
+    <div class="mb-3">
+      <label for="name-new-week" class="form-label">Name:</label>
+      <input type="text" class="form-control" id="name-new-week" />
+    </div>
+    <div class="mb-3">
+      <button type="submit" class="btn btn-primary" style = "background-color: #3ed865;">Create</button>
+    </div>
+  </form>
+</div>
+
+<!-- editWeeks.js -->
+
+<main class="container mt-5">
+  <h1 class="mb-4">Edit</h1>
+  <form class="update-week-form" class="mb-3">
+    <div class="mb-3">
+      <label for="id-update-week" class="form-label">ID</label>
+      <input type="text" class="form-control" id="id-update-week" placeholder="Enter week ID" value="{{id}}" />
+    </div>
+    <div class="mb-3">
+      <label for="name-update-week" class="form-label">ID</label>
+      <input type="text" class="form-control" id="name-update-week" placeholder="Enter week name" value="{{name}}" />
+    </div>
+    <button type="submit" id="update-week" class="btn btn-primary">Save</button>
+    <button type="button" id="delete-week" class="btn btn-danger">Delete</button>
+  </form>
+</main>
+
+<!-- also handles deletion -->
