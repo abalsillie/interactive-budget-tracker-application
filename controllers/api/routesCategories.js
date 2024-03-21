@@ -5,7 +5,7 @@ const { Categories } = require('../../models/');
 const withAuth = require('../../utils/auth');
 
 // Route for creating a new category
-router.post('/api/categories', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
       // Create a new category in the database
       const newCategory = await Categories.create({
@@ -48,7 +48,7 @@ router.get('/:id', async (req, res) => {
 });
 
 //route forREAD JSON DATA
-router.get('/categories', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
       const myCategories = await Categories.findAll(
           // {

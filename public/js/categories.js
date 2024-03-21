@@ -1,65 +1,61 @@
 // Function to render a new category using Handlebars
-const renderNewCategory = async (categoryData) => {
-  try {
-      // Make a fetch request to retrieve the updated list of categories
-      const response = await fetch('/api/categories');
-      if (!response.ok) {
-          throw new Error('Failed to fetch categories.');
-      }
-      const categories = await response.json();
-
-      // Compile Handlebars template for the category card
-      const categoryCardTemplate = Handlebars.compile(document.getElementById('category-card-template').innerHTML);
+// Assuming you receive the complete category object upon successful creation,
+// including any IDs or other properties assigned by the server.
+const renderNewCategory = (categoryData) => {
+    const categoryCardTemplate = Handlebars.compile(document.getElementById('category-card-template').innerHTML);
+    const newCategoryCardHTML = categoryCardTemplate(categoryData);
   
-      // Select the category list container
-      const categoryList = document.querySelector('.category-list');
+    const categoryList = document.querySelector('.category-list');
+    categoryList.insertAdjacentHTML('beforeend', newCategoryCardHTML);
+  };
   
-      // Clear the category list before rendering new categories
-      categoryList.innerHTML = '';
-
-      // Iterate through the categories and render each category card
-      categories.forEach(category => {
-          const newCategoryCardHTML = categoryCardTemplate(category);
-          // Append new category card HTML to the category list
-          categoryList.insertAdjacentHTML('beforeend', newCategoryCardHTML);
-      });
-  } catch (error) {
-      console.error('Error:', error);
-      alert('An error occurred while rendering categories. Please try again.');
-  }
-};
 
 // Function to handle new category form submission
 const newCategoryFormHandler = async (event) => {
-  event.preventDefault(); // Prevent form submission
-  
-  const nameInput = $('#name-new-category');
-  const name = nameInput.val().trim(); // Get category name
-  
-  if (name) {
-      try {
-          const response = await fetch('/api/categories', {
-              method: 'POST',
-              body: JSON.stringify({ name }),
-              headers: { 'Content-Type': 'application/json' },
-          });
+    event.preventDefault(); // Prevent form submission
+    
+    const categoryNameInput = document.getElementById('name-new-category');
+    const categoryName = categoryNameInput.value.trim(); // Get category name
+    
+    if (categoryName) {
+        try {
+            const response = await fetch('/api/categories', {
+                method: 'POST',
+                body: JSON.stringify({ name: categoryName }),
+                headers: { 'Content-Type': 'application/json' },
+            });
 
-          if (response.ok) {
-              // If successful, add the new category to the list
-              const categoryData = await response.json();
-              renderNewCategory(categoryData);
-              nameInput.val(''); // Clear input field after successful submission
-          } else {
-              alert('Error creating category!');
-          }
-      } catch (error) {
-          console.error('Error:', error);
-          alert('An error occurred before category was created. Please try again.');
-      }
-  } else {
-      alert('Please enter a category name.');
-  }
+            if (response.ok) {
+                const newCategory = await response.json(); // Assuming this returns the new category
+                const categoryList = document.querySelector('.category-list');
+
+                // Directly constructing and inserting new category HTML
+                const newCategoryHtml = `
+                    <div class="card mb-3 d-flex justify-content-between" data-category-id="${newCategory.id}">
+                      <div class="card-body d-flex justify-content-between align-items-center">
+                        <h5 class="card-title m-0">${newCategory.name}</h5>
+                        <div>
+                          <button class="btn btn-sm ms-2 edit-category" style="background-color: #3ed865; color: white;" data-id="${newCategory.id}">Edit</button>
+                          <button class="btn btn-sm ms-2 delete-category" style="background-color: #ff69b4; color: white;" data-id="${newCategory.id}">Delete</button>
+                        </div>
+                      </div>
+                    </div>
+                `;
+
+                categoryList.insertAdjacentHTML('beforeend', newCategoryHtml);
+                categoryNameInput.value = ''; // Clear the input field
+            } else {
+                alert('Error creating category!');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred while creating the category. Please try again.');
+        }
+    } else {
+        alert('Please enter a category name.');
+    }
 };
+
 
 // Event listener on new category form
 $('.new-category-form').on('submit', newCategoryFormHandler);
