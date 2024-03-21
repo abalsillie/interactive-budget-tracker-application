@@ -4,7 +4,7 @@ const { Spends, Categories, Weeks } = require('../../models');
 //withAuths is custom security authentication middleware enabled by the  express.js infrustructure
 const withAuths = require('../../utils/auth');
 // C- Create route for a new Spend
-router.post('/spends', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const newSpend = await Spends.create({
       ...req.body,
