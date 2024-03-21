@@ -1,15 +1,26 @@
 {{!-- chart.js --}}
 
-<div class="d-flex justify-content-center">
-    <div class="container-fluid">
-        <!-- Header with Chart -->
-        <div id="chartContainer">
-            <!-- Include your Chart.js image here -->
-            <!-- Placeholder image -->
-            <img src="https://via.placeholder.com/150" alt="Chart Image" class="img-fluid">
+<head>
+    {{!-- bring in chart.js cdn --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {{!-- connect to php file --}}
+    <script type="text/php" src="../public/chartjs.php"></script>
+    <title>Expense Chart</title>
+</head>
+
+<body>
+    <div class="d-flex justify-content-center">
+        <div class="container-fluid">
+            <!-- chart containter -->
+            <div id="chartContainer">
+                <div>
+                    <canvas id="myChart"></canvas>
+                </div>
+                <!-- placeholder image, keep as unsure whether data is appending properly -->
+                <img src="https://via.placeholder.com/150" alt="Chart Image" class="img-fluid">
+            </div>
         </div>
     </div>
-</div>
 
 {{!-- buttons to navigate to individual partials --}}
 <div class="d-flex justify-content-center">
@@ -32,3 +43,4 @@
         </div>
     </div>
 </div>
+</body>

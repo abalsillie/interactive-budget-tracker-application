@@ -1,5 +1,6 @@
 ## Title 
 Interactive-budget-tracker-application
+
 ## Description 
 Welcome to the Interactive Budgeting App! This software is intended to help you manage your money successfully by tracking your income, and expenses, and offering insights into your spending patterns. Whether you're planning for personal or commercial costs, this software covers you.
 
@@ -20,19 +21,19 @@ git clone <repository_URL>
 - Alternatively, if you prefer not to set up the application locally, it is also accessible via Heroku.
 - That's it! You're now ready to use the application locally or through Heroku.
 
-
-## Languages used 
+## Languages used
 - CSS
 - Javascript
-- Handlebar
+- Handlebars
 
-## Deployed link 
+For our additional technology component, we decided to use chart.js to map our expenses on a bar chart, summed by category field. We used XAMPP to test and run PHP. We needed to use PHP to connect our mysql database with our bar chart, allowing us to display dynamic data inserted into our database. An image of our PHP database is below.
+
+## Deployed link
 
 
-## ScreenShots 
-
-
+## ScreenShots
+PHP connected with our mysql database and allowed us to generate a bar chart using chart.js.
+![](./public/images/php.png)
 
 ## License
 The Interactive Budget App is licenced under the MIT Licence.
-
