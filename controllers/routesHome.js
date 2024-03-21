@@ -40,23 +40,16 @@ router.get('/dashboard', async (req, res) => {
 // R- Read route for a all spends brings in assigned categories and weeks also
 router.get('/spends', async (req, res) => {
     try {
-        console.log('Fetching spends from the database...');
-        const allSpends = await Spends.findAll({
-            // where: {
-            //     id: req.params.id,
-            //     user_id: req.session.user_id,
-            // },
-            include:
-                [{ model: Categories, attributes: ['name'] },
-                { model: Weeks, attributes: 'name' }]
-        });
-        console.log('Spends fetched successfully:', allSpends);
-
-        const spends = allSpends.map(week => week.get({ plain: true }));
+        const spends = await Spends.findAll()
+        //     {
+        //     where: {
+        //         user_id: req.session.user_id
+        //     }
+        // });
         res.render('spends', { spends });
-    }
-    catch (err) {
-        res.status(500).json({ message: 'Cannot retrieve your spend expenses' })
+    } catch (err) {
+        console.error('Error fetching spends:', err);
+        res.status(500).json({ message: 'Cannot retrieve spends' });
     }
 });
 

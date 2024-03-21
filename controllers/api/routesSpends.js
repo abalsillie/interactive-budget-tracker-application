@@ -26,9 +26,12 @@ router.get('/:id', async (req, res) => {
       //   id: req.params.id,
       //   user_id: req.session.user_id,
       // },
-      include:
-        [{ model: Categories, }]
-        [{ model: Weeks, }]
+     // Correct
+include: [
+  { model: Categories },
+  { model: Weeks }
+]
+
     });
     if (!oneSpend) {
       res.status(404).json({ message: 'No spend expense with this id found' });
@@ -43,93 +46,85 @@ router.get('/:id', async (req, res) => {
 
 // U- update route for spend
 router.put('/:id', async (req, res) => {
-
+  const { categoryId, ...spendDetails } = req.body; // Assuming you're passing the updated spend details and optionally a new category ID
+  const spendId = req.params.id;
 
   try {
-    //update method returns an array with number of affected rows
-    const spends = await Spends.update(req.body,
-      {
+    // Update the spend details
+    const updatedSpendResult = await Spends.update(spendDetails, {
+      where: {
+        id: spendId,
+        user_id: req.session.user_id, // Ensuring the user owns the spend
+      },
+    });
 
-        // where: {
-        //   id: req.params.id, //correct category targeted
-        //   user_id: req.session.user_id, //session id matches user
-        // },
-      });
-
-    if (spends[0] === 0) {
-      res.status(404).json({ message: 'This spend expense name was not updated for this user!' });
-      return;
+    if (updatedSpendResult[0] === 0) {
+      return res.status(404).json({ message: 'This spend was not updated for this user!' });
     }
-    res.status(200).json({ message: 'Spend name was updated!' });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
 
-// U- update route for spend's associated category NOTE we are taking info from user request at spendId and categoryId
-router.put('/:id', async (req, res) => {
-  const { spendId, categoryId } = req.params;
-  try {
-    //update method returns an array with number of affected rows
-    const spendsCategory = await Spends.update({
-      categories_id: categoryId,
-    }, //need body from update input to call 'categoryId'
-      {
+    // Optionally update the spend's category if a new category ID was provided
+    if (categoryId) {
+      const updatedCategoryResult = await Spends.update({ categories_id: categoryId }, {
         where: {
-          id: spendId, //need body from update input to call 'spendId'
-          user_id: req.session.user_id, //session id matches user
+          id: spendId,
+          user_id: req.session.user_id,
         },
       });
-    //returning the updated category on the spend by primary key
-    if (spendsCategory[0] > 0) {
-      //fetch the updated spend data
-      const updatedSpendCategory = await Spends.findByPk(spendId, {
-        include: [{ model: Categories }],
-      });
-      res.status(200).json(updatedSpendCategory);
+
+      if (updatedCategoryResult[0] === 0) {
+        // This checks if the category update failed, but it's more of a precaution
+        // since the previous check should ensure the spend exists and belongs to the user
+        return res.status(404).json({ message: 'This spend category was not updated for this user!' });
+      }
     }
-    else {
-      res.status(404).json({ message: 'This spend category was not updated for this user!' });
-      return;
-    }
+
+    // Fetch and return the updated spend data including associated category
+    const updatedSpend = await Spends.findByPk(spendId, {
+      include: [{ model: Categories }],
+    });
+
+    res.status(200).json(updatedSpend);
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({ message: err.message || 'An error occurred while updating the spend.' });
   }
 });
+
+
 // D- Delete route for single category w. goal included
-router.delete('/:id', async (req, res) => {
+router.delete('/:id?', async (req, res) => {
   try {
-    const spendData = await Categories.destroy({
-      // where: {
-      //   id: req.params.id,
-      //   user_id: req.session.user_id,
-      // },
-    });
-    if (!categoryData) {
-      res.status(404).json({ message: 'No category with this id is found!' });
-      return;
+    // Check if an ID is provided for deleting a specific spend
+    if (req.params.id) {
+      const spendId = req.params.id;
+      const deletedSpend = await Spends.destroy({
+        where: {
+          id: spendId,
+          // user_id: req.session.user_id, // Ensuring the user owns the spend or has the right to delete it
+        },
+      });
+
+      if (deletedSpend === 0) {
+        return res.status(404).json({ message: 'No spend with this id found!' });
+      }
+
+      return res.status(200).json({ message: 'Spend deleted successfully.' });
+    } else {
+      // No ID provided, proceed to delete all spends for the user
+      const deletedSpendsCount = await Spends.destroy({
+        where: {
+          user_id: req.session.user_id, // Make sure to filter by user_id to only delete the user's spends
+        },
+      });
+
+      if (deletedSpendsCount === 0) {
+        return res.status(404).json({ message: 'No spends found for deletion!' });
+      }
+
+      return res.status(200).json({ message: `${deletedSpendsCount} spends have been deleted.` });
     }
-    res.status(200).json(categoryData);
   } catch (err) {
-    res.status(500).json(err);
+    return res.status(500).json({ message: 'An error occurred while processing your request.' });
   }
 });
-// D- Delete route for all categories
-router.delete('/', async (req, res) => {
-  try {
-    const allCategoryData = await Categories.destroy({
-      // where: {
-      //   user_id: req.session.user_id
-      // },
-    });
-    if (allCategoryData === 0) {
-      res.status(404).json({ message: 'No categories found for deletion!' });
-      return;
-    }
-    //destroy returns a count of items destroyed so here we are adding in the count of deleted items
-    res.status(200).json({ message: `${allCategoryData} categories have been deleted.` });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+
 module.exports = router;
